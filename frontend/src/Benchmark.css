@@ -15,15 +15,16 @@ h2{
 }
 
 .topnav {
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    height: 60px;
-    background-color: #13293D;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    color: white;
+display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #01172F;
+  padding: 1rem;
+  color: white;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
 
 .box{

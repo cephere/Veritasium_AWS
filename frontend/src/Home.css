@@ -1,127 +1,259 @@
+/* Global Styles */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #01172F;
-    padding: 1rem;
-    color: white;
-    height: 60px;
-  }
-  
-  .logo {
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .nav-buttons button {
-    margin: 0 10px;
-    padding: 10px 15px;
-    background-color: #00C6BC;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .nav-buttons button:hover {
-    background-color: #1B857F;
-  }
-  
-  .hero {
-    padding: 50px;
-    text-align: center;
-    color: #334B49;
-    height: 100vh;
-    width: 100vw;
-  }
-  
-  .hero1 {
-    background-image: url('hero1.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-  }
-  
-  .hero2 {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .developer {
-    background-color: #00C6BC;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 200px;
-  }
-  
-  .developer img {
-    width: 100%;
-    border-radius: 50%;
-  }
-  
-  .hero3 {
-    background-image: url('hero3.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-  }
-  
-  .hero3 button {
-    padding: 10px 20px;
-    background-color: #1B857F;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .hero3 button:hover {
-    background-color: #334B49;
-  }
-  
-  .popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 300px;
-  }
-  
-  .close {
-    cursor: pointer;
-    float: right;
-    font-size: 20px;
-  }
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
-  .navlink-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #1B857F;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .navlink-button:hover {
-    background-color: #334B49;
-  }
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #01172F;
+  padding: 1rem;
+  color: white;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.logo {
+  background-color: #01172F;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-weight: 700;
+}
+
+.nav-buttons {
+  align-items: center;
+}
+
+.nav-buttons a {
+  margin: 0 10px;
+  padding: 10px 15px;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.nav-buttons a:hover {
+  color: #1B857F;
+}
+
+/* Hero Section Styles */
+.hero {
+  padding: 50px;
+  text-align: center;
+  color: #334B49;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero1 {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('hero1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;    
+}
+
+.hero1 h1, .hero1 p {
+  margin-top: 30px;
+  padding: 0 130px;
+}
+
+.hero1 p {
+  font-size: large;
+}
+
+.hero2, .hero3 {
+  height: 75vh;
+  width: 100vw;
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url('hero1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;    
+}
+
+.hero2 h1 {
+  text-align:left;
+  margin-left: 50px;
+}
+
+.orange {
+  color: rgb(255, 98, 0);
+}
+
+.hero3 h1 {
+  text-align:right;
+  margin-right: 50px;
+}
+
+.blue {
+  color: rgba(21, 0, 255, 0.786);
+}
+
+.green {
+  color: rgb(18, 95, 18);
+}
+
+.red {
+  color: rgb(189, 12, 12);
+}
+
+.hero41, .hero42 {
+  height: 60vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-image: url('hero1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;    
+}
+
+.div411, .div422 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 800px;
+}
+
+.hero41 h1, .hero41 p {
+  text-align:left;
+  margin: 0 100px 0 50px;
+}
+
+.hero42 h1, .hero42 p {
+  text-align:right;
+  margin: 0 50px 0 100px;
+}
+
+.hero5 {
+  height: 100vh;
+  width: 100vw;
+  gap: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero5 h1 {
+  color: white;
+}
+
+.developers {
+  display: flex;
+}
+
+.developer1, .developer2 {
+  background-color: #00C6BC;
+  width: 250px;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0 30px;
+}
+
+.developer1 img, .developer2 img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.hero6 {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('hero6.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.hero6 h1, .hero6 p {
+  margin-top: 30px;
+}
+
+.hero1 button, .hero6 button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  background-color: #1B857F;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.hero1 button:hover, .hero6 button:hover {
+  background-color: #334B49;
+}
+
+/* Popup Styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 13px;
+  text-align: center;
+  width: 450px;
+}
+
+.close {
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+}
+
+/* NavLink Button Styles */
+.navlink-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #1B857F;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.navlink-button:hover {
+  background-color: #334B49;
+  color: white;
+}

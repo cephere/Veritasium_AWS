@@ -1,0 +1,58 @@
+/* src/AdminPage.css */
+.admin-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    min-height: 100vh; /* Ensure the container takes full height of the viewport */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+.tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between the two main sections */
+    align-items: center; /* Center tables horizontally */
+    width: 100%; /* Ensure it takes full width */
+}
+
+.summary-accounts {
+    display: flex;
+    justify-content: center; /* Center the tables */
+    width: 100%; /* Ensure it takes full width */
+    max-width: 1200px; /* Optional: limit the maximum width */
+}
+
+.summary-table, .accounts-table {
+    flex: 1; /* Allow both tables to take equal space */
+    margin: 0 10px; /* Space between the two tables */
+    max-width: 500px; /* Optional: limit the maximum width of each table */
+}
+
+.records-table {
+    max-width: 1000px; /* Optional: limit the maximum width of the records table */
+    width: 100%; /* Ensure it takes full width */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* Space below each table */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Center text in both headers and cells */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}

@@ -50,7 +50,7 @@
 }
 
 .toggle-button:active,
-.toggle-button:focus {
+.toggle-button:focus, .back-button:focus {
     outline: none;
 }
 
