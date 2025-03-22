@@ -6,17 +6,19 @@ import { FaEye, FaEyeSlash, FaArrowLeft } from 'react-icons/fa';
 import './Login.css';
 
 const Login = () => {
+    // States to handle credentials and login validations
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isValidUsername, setIsValidUsername] = useState(true);
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
-
-    const [activeButton, setActiveButton] = useState('login');
-
     const nav = useNavigate();
 
+    // State to change between forms
+    const [activeButton, setActiveButton] = useState('login');
+
+    // Handles change between forms
     const handleButtonClick = (button) => {
         setActiveButton(button);
         setName('');
@@ -26,18 +28,21 @@ const Login = () => {
         setIsValidUsername(true);
     };
 
+    // Handles prohibited characters in username
     const validateUsername = (username) => {
         // Regular expression to allow only alphanumeric characters
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(username);
     };
 
+    // Handles username change
     const handleUsernameChange = (e) => {
         const username = e.target.value;
         setName(username);
         setIsValidUsername(validateUsername(username));
     };
 
+    // Handles the register function
     const handleRegister = async (e) => {
         e.preventDefault();
         if (!isValidUsername) {
@@ -56,6 +61,7 @@ const Login = () => {
         }
     };
 
+    // Handles the register function
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -64,13 +70,14 @@ const Login = () => {
                 password,
             });
             setMessage(response.data.message);
-            localStorage.setItem('username', name);
-            nav('/AccountHome');
+            sessionStorage.setItem('username', name);
+            nav('/Benchmark');
         } catch (error) {
             setMessage(error.response.data.error);
         }
     };
 
+    // Handles password visibility toggling
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
     };
@@ -120,11 +127,12 @@ const Login = () => {
                                 {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
-                        {message && <p>{message}</p>}
                         <button className='butt' type='submit'>Register</button>
+                        {message && <p className='error'>{message}</p>}
                     </form>
                 ) : (
                     <form onSubmit={handleLogin}>
+                        
                         <input
                             className='input'
                             type="text"
@@ -134,7 +142,6 @@ const Login = () => {
                             required
                         />
                         <div className='password-container'>
-                            {message && <p>{message}</p>}
                             <input
                                 className='password' type={isPasswordVisible ? 'text' : 'password'}
                                 placeholder="Input password"
@@ -149,6 +156,7 @@ const Login = () => {
                         <NavLink className="ResetPassword" to="/ResetPassword">Forgot Password?</NavLink>
                         <br/>
                         <button className='butt' type='submit'>Login</button>
+                        {message && <p className='error'>{message}</p>}
                     </form>
                 )}
             </div>

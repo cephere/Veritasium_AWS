@@ -3,20 +3,22 @@ import { NavLink } from 'react-router-dom';
 import "./Home.css";
 
 const Home = () => {
+  // States for popup and section navigation
   const [showPopup, setShowPopup] = useState(false);
   const hero1Ref = useRef(null);
   const hero41Ref = useRef(null);
   const hero5Ref = useRef(null);
   const hero6Ref = useRef(null);
 
+  // Handles the pop up
   const handleBenchmarkClick = () => {
     setShowPopup(true);
   };
-
   const closePopup = () => {
     setShowPopup(false);
   };
 
+  // Handles the section navigation
   const scrollToHero1 = () => {
     hero1Ref.current.scrollIntoView({ behavior: 'smooth' });
   };

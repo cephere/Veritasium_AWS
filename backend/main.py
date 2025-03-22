@@ -119,5 +119,90 @@ def login():
     finally:
         cursor.close()
         
+@app.route('/api/counts', methods=['GET'])
+def counts():
+    try:
+        cursor = conn.cursor()
+        
+        cursor.execute("""SELECT 
+            COUNT(CASE WHEN NEWS_PREDICTION = 'FAKE' AND ADMIN_EVALUATION = 'FALSE' THEN 1 END) AS Fake_False_Count,
+            COUNT(CASE WHEN NEWS_PREDICTION = 'FAKE' AND ADMIN_EVALUATION = 'TRUE' THEN 1 END) AS Fake_True_Count,
+            COUNT(CASE WHEN NEWS_PREDICTION = 'REAL' AND ADMIN_EVALUATION = 'FALSE' THEN 1 END) AS Real_False_Count,
+            COUNT(CASE WHEN NEWS_PREDICTION = 'REAL' AND ADMIN_EVALUATION = 'TRUE' THEN 1 END) AS Real_True_Count FROM RECORDS""")
+        counts = cursor.fetchall()
+
+        # Convert records to a list of dictionaries
+        counts_list = []
+        for row in counts:
+            counts_list.append({
+                'FalseNegative': row.Fake_False_Count,
+                'TrueNegative': row.Fake_True_Count,
+                'FalsePositive': row.Real_False_Count,
+                'TruePositive': row.Real_True_Count
+            })
+
+        return jsonify(counts_list)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    finally:
+        cursor.close()
+        
+@app.route('/api/users', methods=['GET'])
+def users():
+    try:
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT USER_ID, USERNAME, EMAIL FROM USERS")
+        users = cursor.fetchall()
+
+        # Convert records to a list of dictionaries
+        users_list = []
+        for row in users:
+            users_list.append({
+                'userID': row.USER_ID,
+                'username': row.USERNAME,
+                'email': row.EMAIL
+            })
+
+        return jsonify(users_list)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    finally:
+        cursor.close()        
+
+@app.route('/api/records', methods=['GET'])
+def records():
+    try:
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT * FROM RECORDS")
+        records = cursor.fetchall()
+
+        # Convert records to a list of dictionaries
+        records_list = []
+        for row in records:
+            records_list.append({
+                'newsId': row.NEWS_ID,
+                'userId': row.USER_ID,
+                'newsType': row.NEWS_TYPE,
+                'newsLink': row.NEWS_LINK,
+                'newsPrediction': row.NEWS_PREDICTION,
+                'userEvaluation': row.USER_EVALUATION,
+                'adminEvaluation': row.ADMIN_EVALUATION,
+                'dateOfSubmission': row.SUBMISSION_DATE.strftime('%Y-%m-%d')  # Format date
+            })
+
+        return jsonify(records_list)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    finally:
+        cursor.close()
+        
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

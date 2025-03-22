@@ -106,3 +106,9 @@
     margin-left: 130px;
     font-size: 14px;
 }
+
+.error {
+    color: red;
+    font-size: medium;
+    margin-top: 20px;
+}
