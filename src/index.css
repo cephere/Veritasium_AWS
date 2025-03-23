@@ -19,9 +19,10 @@ a:hover {
 }
 
 body {
-  background-color: #13293D;
+  background: #13293D;
   margin: 0;
   display: flex;
+  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }

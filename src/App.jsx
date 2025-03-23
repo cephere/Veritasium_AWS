@@ -10,6 +10,7 @@ import Home from "./Home";
 import Login from "./Login";
 import Benchmark from "./Benchmark";
 import ResetPassword from "./ResetPassword";
+import Admin from "./Admin";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
           <Route 
             path="/ResetPassword" 
             element={<ResetPassword />}
+          />
+          <Route 
+            path="/Admin" 
+            element={<Admin />}
           />
         </Routes>
       </Router>  

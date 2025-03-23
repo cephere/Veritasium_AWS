@@ -6,17 +6,20 @@ import { FaEye, FaEyeSlash, FaArrowLeft } from 'react-icons/fa';
 import './Login.css';
 
 const Login = () => {
+    // States to handle credentials and login validations
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isValidUsername, setIsValidUsername] = useState(true);
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
-
-    const [activeButton, setActiveButton] = useState('login');
-
+    const [showPopup, setShowPopup] = useState(false);
     const nav = useNavigate();
 
+    // State to change between forms
+    const [activeButton, setActiveButton] = useState('login');
+
+    // Handles change between forms
     const handleButtonClick = (button) => {
         setActiveButton(button);
         setName('');
@@ -26,18 +29,21 @@ const Login = () => {
         setIsValidUsername(true);
     };
 
+    // Handles prohibited characters in username
     const validateUsername = (username) => {
         // Regular expression to allow only alphanumeric characters
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(username);
     };
 
+    // Handles username change
     const handleUsernameChange = (e) => {
         const username = e.target.value;
         setName(username);
         setIsValidUsername(validateUsername(username));
     };
 
+    // Handles the register function
     const handleRegister = async (e) => {
         e.preventDefault();
         if (!isValidUsername) {
@@ -50,27 +56,47 @@ const Login = () => {
                 email,
                 password,
             });
-            setMessage(response.data.message);
+            setShowPopup(true);
         } catch (error) {
             setMessage(error.response ? error.response.data.error : "An error occurred");
         }
     };
 
+    // Handles the popup
+    const closePopup = () => {
+        setShowPopup(false);
+        setName('');
+        setEmail('');
+        setPassword('');
+        setMessage('');
+        setIsValidUsername(true);
+        setActiveButton('login');
+    };
+
+    // Handles the register function
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/login', {
                 name,
                 password,
+                isAdmin: activeButton === 'admin'
             });
             setMessage(response.data.message);
-            localStorage.setItem('username', name);
-            nav('/AccountHome');
+            sessionStorage.setItem('username', name);
+            
+            if (activeButton === 'admin') {
+                nav('/Admin'); 
+            } else {
+                nav('/Benchmark');
+            }
+
         } catch (error) {
             setMessage(error.response.data.error);
         }
     };
 
+    // Handles password visibility toggling
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
     };
@@ -120,11 +146,12 @@ const Login = () => {
                                 {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
-                        {message && <p>{message}</p>}
                         <button className='butt' type='submit'>Register</button>
+                        {message && <p className='error'>{message}</p>}
                     </form>
                 ) : (
                     <form onSubmit={handleLogin}>
+                        
                         <input
                             className='input'
                             type="text"
@@ -134,7 +161,6 @@ const Login = () => {
                             required
                         />
                         <div className='password-container'>
-                            {message && <p>{message}</p>}
                             <input
                                 className='password' type={isPasswordVisible ? 'text' : 'password'}
                                 placeholder="Input password"
@@ -149,7 +175,18 @@ const Login = () => {
                         <NavLink className="ResetPassword" to="/ResetPassword">Forgot Password?</NavLink>
                         <br/>
                         <button className='butt' type='submit'>Login</button>
+                        {message && <p className='error'>{message}</p>}
                     </form>
+                )}
+                {showPopup && (
+                    <div className="popup">
+                        <div className="popup-content">
+                            <span className="close" onClick={closePopup}>&times;</span>
+                            <h2>Account Creation Successful!</h2>
+                            <p className='description'>You can now proceed to login.</p>
+                            <NavLink to="/Login" className="navlink-button" onClick={closePopup}>Go to Login</NavLink>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

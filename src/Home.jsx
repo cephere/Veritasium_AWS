@@ -1,66 +1,114 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Home.css";
-import "./navbar.css";
 
 const Home = () => {
+  // States for popup and section navigation
   const [showPopup, setShowPopup] = useState(false);
+  const hero1Ref = useRef(null);
+  const hero41Ref = useRef(null);
+  const hero5Ref = useRef(null);
+  const hero6Ref = useRef(null);
 
+  // Handles the pop up
   const handleBenchmarkClick = () => {
     setShowPopup(true);
   };
-
   const closePopup = () => {
     setShowPopup(false);
   };
 
+  // Handles the section navigation
+  const scrollToHero1 = () => {
+    hero1Ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToHero4 = () => {
+    hero41Ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToHero5 = () => {
+    hero5Ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToHero6 = () => {
+    hero6Ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="App">
-      <nav className="topnav">
-        <div className="nav-left" onClick={() => window.location.href = '/'}>
-            <h2>VERITASIUM: FAKE NEWS DETECTION</h2>
-        </div>
+      <nav className="navbar">
+        <div className="logo" onClick={() => window.location.href = '/'}>VERITASIUM</div>
         <div className="nav-buttons">
-          <button>Home</button>
-          <button>Developers</button>
-          <button onClick={handleBenchmarkClick}>Benchmark</button>
+        <a onClick={scrollToHero1}>Home</a>
+        <a onClick={scrollToHero4}>How It Works</a>
+        <a onClick={scrollToHero5}>Developers</a>
+        <a onClick={scrollToHero6}>Benchmark</a>
         </div>
       </nav>
 
-
-
-      <section className="hero hero1">
-        <div>
+      <section className="hero1" ref={hero1Ref}>
         <h1>Why Fake News Detection Matters</h1>
-        <p>In today's digital age, misinformation spreads rapidly. Our mission is to combat fake news and promote truth.</p>
+        <p>The detection of false news proves essential since deceptive information circulates quickly to alter public viewpoints and political choices and democratic operations. False information triggers panic situations while it simultaneously controls financial markets and harms reputations and weakens public trust in institutions. The rise of social media together with AI-generated content makes detecting and stopping fake news essential because people need to base their choices on accurate information instead of deceptive messages.</p>
+        <button onClick={handleBenchmarkClick}>Benchmark</button>
+      </section>
+
+      <section className="hero2">
+        <h1>An alarming rise of <em className='orange'>fake news</em> is steadily undermining public trust, from misinformation in the content to falsifying article thumbnails.</h1>
+      </section>
+
+      <section className="hero3">
+        <h1><em className='blue'>VERITASIUM</em> addresses this by considering and taking into account both texts and images in determining whether a news article is <em className='green'>real</em> or <em className='red'>fake</em>.</h1>
+      </section>
+
+      <section className="hero41" ref={hero41Ref}>
+        <div className='div411'>
+          <h1>Search and Extract</h1>
+          <p><em>VERITASIUM</em> browses articles and extracts both its text and image contents, converting them to measurable parameters.</p>
+        </div>
+        <div className='div412'>
+          <img src='src/assets/aaron.jpg'></img>
         </div>
       </section>
 
-      {/* <section className="hero hero2">
-        <div className="developer">
-          <img src="src/assets/aaron.jpg" alt="Aaron Alimbon" />
-          <h2>Aaron Alimbon</h2>
-          <p>Specialist in web development and user experience.</p>
+      <section className="hero42">
+        <div className='div421'>
+          <img src='src/assets/aaron.jpg'></img>
         </div>
-        <div className="developer">
-          <img src="src/assets/matthew.jpg" alt="Matthew Centeno" />
-          <h2>Matthew Centeno</h2>
-          <p>Expert in machine learning and data analysis.</p>
+        <div className='div422'>
+          <h1>Benchmark</h1>
+          <p>A customized machine learning model is developed and fine-tuned through numerous training and testing to check attributes such as sentiment, readability, metadata, and visual elements (image quality, source reliability) before providing a reliable conjecture.</p>
         </div>
-      </section> */}
-      {/* 
-      <section className="hero hero3">
+      </section>
+
+      <section className="hero5" ref={hero5Ref}>
+        <h1>Meet the developers</h1>
+        <div className='developers'>
+          <div className="developer1">
+            <img src="src/assets/aaron.jpg" alt="Aaron Alimbon" />
+            <h2>Aaron Alimbon</h2>
+            <p>Specialist in Web Development and User Experience.</p>
+          </div>
+          <div className="developer2">
+            <img src="src/assets/matthew.jpg" alt="Matthew Centeno" />
+            <h2>Matthew Centeno</h2>
+            <p>Expert in Machine Learning and Data Analysis.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="hero6" ref={hero6Ref}>
         <h1>Start Benchmarking Today!</h1>
         <p>Join us in the fight against fake news. Click below to begin.</p>
         <button onClick={handleBenchmarkClick}>Benchmark</button>
-      </section> */}
+      </section>
 
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
             <span className="close" onClick={closePopup}>&times;</span>
             <h2>Account Required</h2>
-            <p>You need to create an account for security and data storing purposes.</p>
+            <p>You need to create an account to ensure data security, privacy, and storage safety.</p>
             <NavLink to="/Login" className="navlink-button" onClick={closePopup}>Go to Login</NavLink>
           </div>
         </div>

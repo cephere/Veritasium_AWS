@@ -1,150 +1,154 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { FaEye, FaEyeSlash, FaArrowLeft } from 'react-icons/fa';
-
-import './Login.css';
+import './ResetPassword.css';
 
 const ResetPassword = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [isValidUsername, setIsValidUsername] = useState(true);
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
-
-    const [activeButton, setActiveButton] = useState('login');
-
     const nav = useNavigate();
+    const [step, setStep] = useState(1);
+    const [email, setEmail] = useState('');
+    const [otp, setOtp] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isNewPasswordVisible, setisNewPassword] = useState(false);
+    const [isConfirmPasswordVisible, setisConfirmPassword] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+    const [message, setMessage] = useState('');
 
-    const handleButtonClick = (button) => {
-        setActiveButton(button);
-    };
-
-    const validateUsername = (username) => {
-        // Regular expression to allow only alphanumeric characters
-        const regex = /^[a-zA-Z0-9]+$/;
-        return regex.test(username);
-    };
-
-    const handleUsernameChange = (e) => {
-        const username = e.target.value;
-        setName(username);
-        setIsValidUsername(validateUsername(username));
-    };
-
-    const handleRegister = async (e) => {
+    const handleSendOtp = async (e) => {
         e.preventDefault();
-        if (!isValidUsername) {
-            setMessage("Username can only contain letters and numbers.");
+        // Call your backend API to send OTP
+        // Example: await sendOtpToEmail(email);
+        console.log('Sending OTP to:', email);
+        setStep(2);
+    };
+
+    const handleVerifyOtp = async (e) => {
+        e.preventDefault();
+        // Call your backend API to verify OTP
+        // Example: const isValid = await verifyOtp(email, otp);
+        console.log('Verifying OTP:', otp);
+        const isValid = true;
+        if (isValid) {
+            setStep(3);
+        } else {
+            setMessage('Invalid OTP. Please try again.');
+        }
+    };
+
+    // Handles password visibility toggling
+    const toggleNewPasswordVisibility = () => {
+        setisNewPassword(!isNewPasswordVisible);
+    };
+    const toggleConfirmPasswordVisibility = () => {
+        setisConfirmPassword(!isConfirmPasswordVisible);
+    };
+
+    const handleResetPassword = async (e) => {
+        e.preventDefault();
+        if (newPassword !== confirmPassword) {
+            setMessage('Passwords do not match.');
             return;
         }
-        try {
-            const response = await axios.post('http://localhost:8080/register', {
-                name,
-                email,
-                password,
-            });
-            setMessage(response.data.message);
-        } catch (error) {
-            setMessage(error.response ? error.response.data.error : "An error occurred");
-        }
+        // Call your backend API to reset the password
+        // Example: await resetUser Password(email, newPassword);
+        console.log('Resetting password for:', email);
+        setShowPopup(true);
     };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8080/login', {
-                name,
-                password,
-            });
-            setMessage(response.data.message);
-            localStorage.setItem('username', name);
-            nav('/AccountHome');
-        } catch (error) {
-            setMessage(error.response.data.error);
-        }
-    };
-
-    const togglePasswordVisibility = () => {
-        setIsPasswordVisible(!isPasswordVisible);
+    // Handles the pop up
+    const closePopup = () => {
+        setShowPopup(false);
     };
 
     return (
         <div className='login-container'>
             <div className='padding'>
-                <button className="back-button" onClick={() => nav('/')}>
-                    <FaArrowLeft /> <p>Back to Home</p>
-                </button>
+                {step === 1 && (
+                    <>
+                        <button className="back-button" onClick={() => nav('/Login')}>
+                        <FaArrowLeft /> <p className='login'>Back to Login</p>
+                        </button>
 
-                <div className='login-toggle'>
-                    <button 
-                        className={`toggle-button ${activeButton === 'login' ? 'active' : ''}`} 
-                        onClick={() => handleButtonClick('login')}
-                        autoFocus
-                    >
-                        <h2>Login</h2>
-                    </button>
-                    <button 
-                        className={`toggle-button ${activeButton === 'admin' ? 'active' : ''}`} 
-                        onClick={() => handleButtonClick('admin')}
-                    >
-                        <h2>Admin Login</h2>
-                    </button>
-                    <button 
-                        className={`toggle-button ${activeButton === 'register' ? 'active' : ''}`} 
-                        onClick={() => handleButtonClick('register')}
-                    >
-                        <h2>Register</h2>
-                    </button>
-                </div>
-
-                {activeButton === 'register' ? (
-                    <form onSubmit={handleRegister}>
-                        <input className='input' type="email" placeholder="Input email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <input className='input' type="text" placeholder="Input username" value={name} onChange={handleUsernameChange} required />
-                        <div className='password-container'>
+                        <h2>Reset your password</h2>
+                        <form className='emailform' onSubmit={handleSendOtp}>
                             <input
-                                className='password' type={isPasswordVisible ? 'text' : 'password'}
-                                placeholder="Input password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                className='input'
+                                type="email"
+                                placeholder="Enter your email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-                            <button type="button" onClick={togglePasswordVisibility} className='eye-button'>
-                                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                        </div>
-                        {message && <p>{message}</p>}
-                        <button className='butt' type='submit'>Register</button>
-                    </form>
-                ) : (
-                    <form onSubmit={handleLogin}>
-                        <input
-                            className='input'
-                            type="text"
-                            placeholder="Input username"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                        <div className='password-container'>
-                            {message && <p>{message}</p>}
+                            <button className='butt' type='submit'>Send OTP</button>
+                        </form>
+                    </>
+                    
+                )}
+
+                {step === 2 && (
+                    <>
+                        <button className="back-button" onClick={() => setStep(1)}>
+                        <FaArrowLeft /> <p className='login'>Back</p>
+                        </button>
+
+                        <h2>Reset your password</h2>
+
+                        <form className='emailform' onSubmit={handleVerifyOtp}>
                             <input
-                                className='password' type={isPasswordVisible ? 'text' : 'password'}
-                                placeholder="Input password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                className='input'
+                                type="text"
+                                placeholder="Enter the OTP"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
                                 required
                             />
-                            <button type="button" onClick={togglePasswordVisibility} className='eye-button'>
-                                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                            </button>
+                            <button className='butt' type='submit'>Verify OTP</button>
+                        </form>
+                    </>
+                    
+                )}
+
+                {step === 3 && (
+                    <>
+                        <h2>Reset your password</h2>
+
+                        <form className='emailform' onSubmit={handleResetPassword}>
+                            <div className='password-container'>
+                                <input
+                                    className='password' type={isNewPasswordVisible ? 'text' : 'password'}
+                                    placeholder="Enter new password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    required/>
+                                <button type="button" onClick={toggleNewPasswordVisibility} className='eye-button'>
+                                    {isNewPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
+                            <div className='password-container'>
+                                <input
+                                    className='password' type={isConfirmPasswordVisible ? 'text' : 'password'}
+                                    placeholder="Confirm new password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required/>
+                                <button type="button" onClick={toggleConfirmPasswordVisibility} className='eye-button'>
+                                {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
+                            {message && <p className="passworderror">{message}</p>}
+                            <button className='butt' type='submit'>Reset Password</button>
+                        </form>
+                    </>
+                )}
+                {showPopup && (
+                    <div className="popup">
+                        <div className="popup-content">
+                            <h2>Password Reset Successful!</h2>
+                            <p className='description'>You can now proceed to login.</p>
+                            <NavLink to="/Login" className="navlink-button" onClick={closePopup}>Go to Login</NavLink>
                         </div>
-                        <NavLink className="Nav" to="/ResetPassword">Forgot Password?</NavLink>
-                        <br/>
-                        <button className='butt' type='submit'>Login</button>
-                    </form>
+                    </div>
                 )}
             </div>
         </div>
