@@ -13,6 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
+    const [showPopup, setShowPopup] = useState(false);
     const nav = useNavigate();
 
     // State to change between forms
@@ -55,10 +56,21 @@ const Login = () => {
                 email,
                 password,
             });
-            setMessage(response.data.message);
+            setShowPopup(true);
         } catch (error) {
             setMessage(error.response ? error.response.data.error : "An error occurred");
         }
+    };
+
+    // Handles the popup
+    const closePopup = () => {
+        setShowPopup(false);
+        setName('');
+        setEmail('');
+        setPassword('');
+        setMessage('');
+        setIsValidUsername(true);
+        setActiveButton('login');
     };
 
     // Handles the register function
@@ -68,10 +80,17 @@ const Login = () => {
             const response = await axios.post('http://localhost:8080/login', {
                 name,
                 password,
+                isAdmin: activeButton === 'admin'
             });
             setMessage(response.data.message);
             sessionStorage.setItem('username', name);
-            nav('/Benchmark');
+            
+            if (activeButton === 'admin') {
+                nav('/Admin'); 
+            } else {
+                nav('/Benchmark');
+            }
+
         } catch (error) {
             setMessage(error.response.data.error);
         }
@@ -158,6 +177,16 @@ const Login = () => {
                         <button className='butt' type='submit'>Login</button>
                         {message && <p className='error'>{message}</p>}
                     </form>
+                )}
+                {showPopup && (
+                    <div className="popup">
+                        <div className="popup-content">
+                            <span className="close" onClick={closePopup}>&times;</span>
+                            <h2>Account Creation Successful!</h2>
+                            <p className='description'>You can now proceed to login.</p>
+                            <NavLink to="/Login" className="navlink-button" onClick={closePopup}>Go to Login</NavLink>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

@@ -6,11 +6,8 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    max-height: max-content;
     margin-top: 30px;
-}
-
-.admin:hover {
-    cursor: default;
 }
 
 .topcontainer {
@@ -22,20 +19,45 @@
     margin-top: 30px;
 }
 
+.nav-buttons {
+    display: flex;
+    align-items: center;
+}
+
 .summarytable, .accountstable {
     flex: 1;
     max-width: 500px;
 }
 
+.accountstable {
+    height: 345px;
+}
+
 .recordsbuttons {
     display: flex;
-    margin-top: 60px;
-    gap: 10px
+    margin: 20px 0;
 }
 
 .recordsform {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
+}
+
+.filter {
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.options {
+    font-size: medium;
+}
+
+.filter:hover {
+    cursor: pointer;
 }
 
 .inputsearch {
@@ -45,19 +67,27 @@
     text-align: center;
 }
 
-.recordsbutton, .update {
+.recordsbutton, .update, .downloadcsv {
     background-color: #1B857F;
     transition: background-color 0.3s;
     color: white;
     border-radius: 20px;
 }
 
-.recordsbutton:hover, .update:hover {
+.downloadcsv {
+    height: 48.8px;
+    width: 190px;
+}
+
+.recordsbutton:hover, .update:hover, .downloadcsv:hover {
     background-color: #334B49;
 }
 
-.recordstable {
-    margin-top: 20px;
+.recordstable{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
 }
 
 h1 {
@@ -83,4 +113,63 @@ th {
 
 a {
     color: black;
+}
+
+.adminuser {
+    color: white;
+}
+
+.adminuser a:hover {
+    color: white;
+    cursor: default;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.pagination button {
+    margin: 10px 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #1B857F;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #334B49;
+}
+
+.pagination span {
+    margin: 0 5px;
+}
+
+.ellipsis {
+    padding: 8px;
+}
+
+.admin-evaluation-input {
+    width: 100px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+}
+
+.update {
+    padding: 5px 8px;
+    font-size: 1.2em;
+}
+
+.news-link {
+    width: 320px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
 }

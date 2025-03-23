@@ -105,10 +105,15 @@ def login():
     data = request.json
     username = data['name']
     password = data['password']
+    is_admin = data.get('isAdmin', False)
 
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?", (username, password))
+        if is_admin:
+            cursor.execute("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ? AND USER_ID IN (1, 2)", (username, password))
+        else:
+            cursor.execute("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?", (username, password))
+
         user = cursor.fetchone()
         if user:
             return jsonify({"message": "Login successful!"}), 200
@@ -201,6 +206,55 @@ def records():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+    finally:
+        cursor.close()
+        
+@app.route('/api/search', methods=['GET'])
+def searchrecords():
+    search = request.args.get('search', '')
+    filter_option = request.args.get('filter', 'All')  # Get the filter option from the request
+    cursor = conn.cursor()
+    
+    # Base query
+    query = "SELECT * FROM RECORDS"
+    params = []
+
+    # Modify the query based on the selected filter option
+    if filter_option == 'UserID':
+        query += " WHERE USER_ID LIKE ?"
+        params = ['%' + search + '%']
+    elif filter_option == 'NewsType':
+        query += " WHERE NEWS_TYPE LIKE ?"
+        params = ['%' + search + '%']
+    elif filter_option == 'All':
+        query += " WHERE USER_ID LIKE ? OR NEWS_TYPE LIKE ? OR NEWS_LINK LIKE ? OR NEWS_PREDICTION LIKE ? OR USER_EVALUATION LIKE ? OR ADMIN_EVALUATION LIKE ? OR SUBMISSION_DATE LIKE ?"
+        params = ['%' + search + '%'] * 7  # Create a list of parameters for the query
+
+    cursor.execute(query, params)
+    records = cursor.fetchall()
+    
+    # Convert records to a list of dictionaries
+    records_list = [{'newsId': r[0], 'userId': r[1], 'newsType': r[2], 'newsLink': r[3], 
+                     'newsPrediction': r[4], 'userEvaluation': r[5], 
+                     'adminEvaluation': r[6], 'dateOfSubmission': r[7]} for r in records]
+    
+    cursor.close()
+    return jsonify(records_list)
+
+@app.route('/api/records/<int:record_id>', methods=['PUT'])
+def update_record(record_id):
+    data = request.get_json()
+    admin_evaluation = data.get('adminEvaluation')
+    
+    try:
+        cursor = conn.cursor()
+        
+        # Update the record in the database
+        cursor.execute("UPDATE RECORDS SET ADMIN_EVALUATION = ? WHERE NEWS_ID = ?", (admin_evaluation, record_id))
+        conn.commit()
+        return jsonify({'message': 'Record updated successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
     finally:
         cursor.close()
         
