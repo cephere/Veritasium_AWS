@@ -67,13 +67,13 @@ const Home = () => {
           <p><em>VERITASIUM</em> browses articles and extracts both its text and image contents, converting them to measurable parameters.</p>
         </div>
         <div className='div412'>
-          <img src='src/assets/aaron.jpg'></img>
+          <img src='/aaron.jpg'></img>
         </div>
       </section>
 
       <section className="hero42">
         <div className='div421'>
-          <img src='src/assets/aaron.jpg'></img>
+          <img src='/aaron.jpg'></img>
         </div>
         <div className='div422'>
           <h1>Benchmark</h1>
@@ -85,12 +85,12 @@ const Home = () => {
         <h1>Meet the developers</h1>
         <div className='developers'>
           <div className="developer1">
-            <img src="src/assets/aaron.jpg" alt="Aaron Alimbon" />
+            <img src="/aaron.jpg" alt="Aaron Alimbon" />
             <h2>Aaron Alimbon</h2>
             <p>Specialist in Web Development and User Experience.</p>
           </div>
           <div className="developer2">
-            <img src="src/assets/matthew.jpg" alt="Matthew Centeno" />
+            <img src="/matthew.jpg" alt="Matthew Centeno" />
             <h2>Matthew Centeno</h2>
             <p>Expert in Machine Learning and Data Analysis.</p>
           </div>
