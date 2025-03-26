@@ -11,7 +11,7 @@ const Benchmark = () => {
 
     const fetchapi = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/api/algo");
+            const response = await axios.get("https://inidczi2h2.execute-api.ap-southeast-1.amazonaws.com/api/load_model");
             setArray(response.data);
             setShowResults(true);
         } catch (error) {
@@ -64,7 +64,7 @@ const Benchmark = () => {
                         array.map((algo) => (
                             <div className="container-horizontal" key={algo.model_name}>
                                 <h2 className="container-text">
-                                    {algo.model_name}: {algo.accuracy}%
+                                    {algo.model_name}: {algo.prediction}%
                                 </h2>
                                 <a href="https://www.geeksforgeeks.org/machine-learning-algorithms/" target="_blank" rel="noopener noreferrer">
                                     More Details
