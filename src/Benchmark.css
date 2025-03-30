@@ -85,7 +85,7 @@ h2{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content:space-around;
+    justify-content:space-evenly;
     background-color: transparent;
     padding: 1em;
 }
@@ -111,7 +111,7 @@ h2{
     font-family: "Montserrat";
     font-size: 1em;
     color: white;
-    text-align: center;
+    text-align: center;   
 }
 
 .prediction-container-a{
