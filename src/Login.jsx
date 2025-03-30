@@ -7,7 +7,7 @@ import './Login.css';
 
 const Login = () => {
     // States to handle credentials and login validations
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [isValidUsername, setIsValidUsername] = useState(true);
     const [password, setPassword] = useState('');
@@ -22,7 +22,7 @@ const Login = () => {
     // Handles change between forms
     const handleButtonClick = (button) => {
         setActiveButton(button);
-        setName('');
+        setUsername('');
         setEmail('');
         setPassword('');
         setMessage('');
@@ -39,7 +39,7 @@ const Login = () => {
     // Handles username change
     const handleUsernameChange = (e) => {
         const username = e.target.value;
-        setName(username);
+        setUsername(username);
         setIsValidUsername(validateUsername(username));
     };
 
@@ -51,8 +51,8 @@ const Login = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8080/register', {
-                name,
+            const response = await axios.post('https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/register', {
+                username,
                 email,
                 password,
             });
@@ -65,7 +65,7 @@ const Login = () => {
     // Handles the popup
     const closePopup = () => {
         setShowPopup(false);
-        setName('');
+        setUsername('');
         setEmail('');
         setPassword('');
         setMessage('');
@@ -76,25 +76,33 @@ const Login = () => {
     // Handles the register function
     const handleLogin = async (e) => {
         e.preventDefault();
+    
         try {
-            const response = await axios.post('http://localhost:8080/login', {
-                name,
+            const response = await axios.post('https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/login', {
+                username,
                 password,
                 isAdmin: activeButton === 'admin'
             });
+    
+            // Set success message
             setMessage(response.data.message);
-            sessionStorage.setItem('username', name);
-            
+    
+            // Store session information
+            sessionStorage.setItem('username', username);
+    
+            // Redirect based on user type
             if (activeButton === 'admin') {
                 nav('/Admin'); 
             } else {
                 nav('/Benchmark');
             }
-
+    
         } catch (error) {
-            setMessage(error.response.data.error);
+            // Handle different error cases
+            setMessage(error.response?.data?.error || "An unexpected error occurred. Please try again.");
         }
     };
+    
 
     // Handles password visibility toggling
     const togglePasswordVisibility = () => {
@@ -133,7 +141,7 @@ const Login = () => {
                 {activeButton === 'register' ? (
                     <form onSubmit={handleRegister} className="register-form">
                         <input className='input' type="email" placeholder="Input email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <input className='input' type="text" placeholder="Input username" value={name} onChange={handleUsernameChange} required />
+                        <input className='input' type="text" placeholder="Input username" value={username} onChange={handleUsernameChange} required />
                         <div className='password-container'>
                             <input
                                 className='password' type={isPasswordVisible ? 'text' : 'password'}
@@ -156,8 +164,8 @@ const Login = () => {
                             className='input'
                             type="text"
                             placeholder="Input username"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                         <div className='password-container'>

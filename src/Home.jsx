@@ -10,74 +10,69 @@ const Home = () => {
   const hero5Ref = useRef(null);
   const hero6Ref = useRef(null);
 
-  // Handles the pop up
+  // Handles Benchmark button click
   const handleBenchmarkClick = () => {
-    setShowPopup(true);
+    const isAuthenticated = sessionStorage.getItem("username"); // Check if user is logged in
+    if (isAuthenticated) {
+      window.location.href = "/Benchmark"; // Redirect directly if authenticated
+    } else {
+      setShowPopup(true); // Show login popup if not authenticated
+    }
   };
+
   const closePopup = () => {
     setShowPopup(false);
   };
 
-  // Handles the section navigation
-  const scrollToHero1 = () => {
-    hero1Ref.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToHero4 = () => {
-    hero41Ref.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToHero5 = () => {
-    hero5Ref.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToHero6 = () => {
-    hero6Ref.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Handles section navigation
+  const scrollToHero1 = () => hero1Ref.current.scrollIntoView({ behavior: 'smooth' });
+  const scrollToHero4 = () => hero41Ref.current.scrollIntoView({ behavior: 'smooth' });
+  const scrollToHero5 = () => hero5Ref.current.scrollIntoView({ behavior: 'smooth' });
+  const scrollToHero6 = () => hero6Ref.current.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <div className="App">
       <nav className="navbar">
         <div className="logo" onClick={() => window.location.href = '/'}>VERITASIUM</div>
         <div className="nav-buttons">
-        <a onClick={scrollToHero1}>Home</a>
-        <a onClick={scrollToHero4}>How It Works</a>
-        <a onClick={scrollToHero5}>Developers</a>
-        <a onClick={scrollToHero6}>Benchmark</a>
+          <a onClick={scrollToHero1}>Home</a>
+          <a onClick={scrollToHero4}>How It Works</a>
+          <a onClick={scrollToHero5}>Developers</a>
+          <a onClick={scrollToHero6}>Benchmark</a>
         </div>
       </nav>
 
       <section className="hero1" ref={hero1Ref}>
         <h1>Why Fake News Detection Matters</h1>
-        <p>The detection of false news proves essential since deceptive information circulates quickly to alter public viewpoints and political choices and democratic operations. False information triggers panic situations while it simultaneously controls financial markets and harms reputations and weakens public trust in institutions. The rise of social media together with AI-generated content makes detecting and stopping fake news essential because people need to base their choices on accurate information instead of deceptive messages.</p>
+        <p>The detection of false news proves essential since deceptive information circulates quickly to alter public viewpoints and political choices and democratic operations...</p>
         <button onClick={handleBenchmarkClick}>Benchmark</button>
       </section>
 
       <section className="hero2">
-        <h1>An alarming rise of <em className='orange'>fake news</em> is steadily undermining public trust, from misinformation in the content to falsifying article thumbnails.</h1>
+        <h1>An alarming rise of <em className='orange'>fake news</em> is steadily undermining public trust...</h1>
       </section>
 
       <section className="hero3">
-        <h1><em className='blue'>VERITASIUM</em> addresses this by considering and taking into account both texts and images in determining whether a news article is <em className='green'>real</em> or <em className='red'>fake</em>.</h1>
+        <h1><em className='blue'>VERITASIUM</em> addresses this by considering both texts and images...</h1>
       </section>
 
       <section className="hero41" ref={hero41Ref}>
         <div className='div411'>
           <h1>Search and Extract</h1>
-          <p><em>VERITASIUM</em> browses articles and extracts both its text and image contents, converting them to measurable parameters.</p>
+          <p><em>VERITASIUM</em> browses articles and extracts both text and image contents...</p>
         </div>
         <div className='div412'>
-          <img src='/aaron.jpg'></img>
+          <img src='/aaron.jpg' alt="Search and Extract" />
         </div>
       </section>
 
       <section className="hero42">
         <div className='div421'>
-          <img src='/aaron.jpg'></img>
+          <img src='/aaron.jpg' alt="Benchmarking" />
         </div>
         <div className='div422'>
           <h1>Benchmark</h1>
-          <p>A customized machine learning model is developed and fine-tuned through numerous training and testing to check attributes such as sentiment, readability, metadata, and visual elements (image quality, source reliability) before providing a reliable conjecture.</p>
+          <p>A customized machine learning model is developed and fine-tuned through numerous training and testing...</p>
         </div>
       </section>
 

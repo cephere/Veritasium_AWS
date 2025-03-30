@@ -151,18 +151,24 @@ const Benchmark = () => {
         }
     };
 
+    const handleLogout = () => {
+        sessionStorage.removeItem("username");
+        window.location.href = "/";
+    };
+    
+
     return (
         <div className="container">
             <div className="topnav">
                 <div className="nav-left">
-                    <h2>VERITASIUM: FAKE NEWS DETECTION</h2>
+                    <NavLink to="/"><h2>VERITASIUM: FAKE NEWS DETECTION</h2></NavLink>
                 </div>
                 <div className="nav-right">
                     <h2>Hello, {username}!</h2>
                     <img className="icon" src="icon.png" alt="User Icon" />
                     <h2>|</h2>
                     <h2>
-                        <NavLink to="/">Logout</NavLink>
+                        <NavLink to="/" onClick={handleLogout}>Logout</NavLink>
                     </h2>
                 </div>
             </div>

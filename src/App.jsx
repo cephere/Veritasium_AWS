@@ -11,6 +11,7 @@ import Login from "./Login";
 import Benchmark from "./Benchmark";
 import ResetPassword from "./ResetPassword";
 import Admin from "./Admin";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
@@ -23,10 +24,6 @@ function App() {
             element={<Home />}
           />
           <Route 
-            path="/Benchmark" 
-            element={<Benchmark />}
-          />
-          <Route 
             path="/Login" 
             element={<Login />}
           />
@@ -34,10 +31,10 @@ function App() {
             path="/ResetPassword" 
             element={<ResetPassword />}
           />
-          <Route 
-            path="/Admin" 
-            element={<Admin />}
-          />
+          <Route element={<PrivateRoute />}>
+            <Route path="/Benchmark" element={<Benchmark />} />
+            <Route path="/Admin" element={<Admin />} />
+          </Route>
         </Routes>
       </Router>  
     </>

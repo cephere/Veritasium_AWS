@@ -1,7 +1,7 @@
-/* @font-face {
-    font-family: 'Galak';
-    src: url(/fonts/GalakPro.ttf);
-} */
+@font-face {
+    font-family: 'Montserrat';
+    src: url(\fonts\Montserrat.ttf);
+}
 
 * {
     margin: 0;
