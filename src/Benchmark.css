@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Montserrat';
-    src: url(\fonts\Montserrat.ttf);
+    src: url(fonts/Montserrat.ttf);
 }
 
 * {
@@ -40,8 +40,37 @@ h2{
     cursor: pointer;
 }
 
-.nav h2:hover{
-    color: #A4B465;
+.topnav h2:hover{
+    color: #247BA0;
+}
+
+.topnav h3{
+    font-family: "Montserrat";
+    font-size: 0.8rem;
+    font-weight: 300;
+
+    margin: 1em;
+    
+    width: fit-content;
+
+    color: white;
+    cursor: pointer;;
+}
+
+.topnav a{
+    font-family: "Montserrat";
+    font-size: 0.8rem;
+    font-weight: 300;
+
+    
+    width: fit-content;
+
+    color: white;
+    cursor: pointer;
+}
+
+.topnav a:hover{
+    color: #247BA0;
 }
 
 .box{
@@ -56,6 +85,7 @@ h2{
     flex: 1;
     justify-content: flex-end;
     align-items: center;
+    padding-right: 1%;
 }
 
 .nav-left{
@@ -140,7 +170,9 @@ h2{
 }
 
 .text-box{
-    font-size: 25px;
+    font-family: "Montserrat";
+    font-size: 1em;
+    padding-left: 1%;
     height: 35px;
     width: 65%; 
     border-radius: 8px; 
