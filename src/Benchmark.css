@@ -24,6 +24,7 @@ h2{
 
     background-color: #13293D;
     margin: 0px;
+    margin-bottom: 1em;
 }
 
 .topnav h2{
@@ -157,4 +158,27 @@ h2{
 .icon{
     height: 1em;
     width: 1em;
+}
+
+@media screen and (max-width: 720px) {
+    .container-horizontal{
+        width: 70%;
+        height: 50%;
+        margin: 0.5em;
+    }
+    .container-vertical{
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    .text-box{
+        width: 90vw; 
+    }
+    .topnav h2{
+        font-size: 0.5rem;
+    }
+    .box-text-header{
+        font-size: 1em;
+    }
+    
 }
