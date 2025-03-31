@@ -1,8 +1,10 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const PrivateRoute = () => {
-    const username = sessionStorage.getItem("username"); 
+    const username = sessionStorage.getItem("username");
     const location = useLocation();
+
+    console.log("Current username:", username);
 
     if (location.pathname === "/Admin" && username !== "admin1" && username !== "admin2") {
         return <Navigate to="/" replace />;

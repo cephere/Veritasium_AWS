@@ -36,6 +36,7 @@ const Admin = () => {
         const response = await axios.get("https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_users",
           { headers: { "Content-Type": "application/json" } }
         );
+        console.log(username)
         setUsersData(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
