@@ -176,7 +176,7 @@ body {
 .hero5 {
   height: 100vh;
   width: 100vw;
-  gap: 70px;
+  gap: 3%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -195,17 +195,23 @@ body {
 }
 
 .developer1, .developer2 {
+  justify-items: center;
   font-family: 'Montserrat';
   background-color: #00C6BC;
-  width: 250px;
-  padding: 40px;
+  width: 50%; /* Adjust percentage as needed */
+  max-width: 200px; /* Prevent it from getting too big */
+  height: auto; /* Maintain aspect ratio */
   border-radius: 10px;
   text-align: center;
+  padding: 5%;
   margin: 0 30px;
 }
 
 .developer1 img, .developer2 img {
-  width: 100%;
+  margin: 5%;
+  width: 80%; /* Adjust percentage as needed */
+  max-width: 300x; /* Prevent it from getting too big */
+  height: auto; /* Maintain aspect ratio */
   border-radius: 50%;
 }
 
@@ -313,7 +319,9 @@ body {
 }
 
 .op{
-  display: block;
+  width: 50%; /* Adjust percentage as needed */
+  max-width: 200px; /* Prevent it from getting too big */
+  height: auto; /* Maintain aspect ratio */
 }
 
 @media screen and (max-width: 720px) {
@@ -378,9 +386,6 @@ body {
     font-size: 0.5em;
   }
 
-  .op{
-    display: none;
-  }
 
   .hero1 button, .hero6 button {
     font-family: 'Montserrat';
