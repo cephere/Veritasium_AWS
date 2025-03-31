@@ -1,8 +1,14 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const PrivateRoute = () => {
-    const isAuthenticated = sessionStorage.getItem("username"); // Check if user is logged in
-    return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+    const username = sessionStorage.getItem("username"); 
+    const location = useLocation();
+
+    if (location.pathname === "/Admin" && username !== "admin1" && username !== "admin2") {
+        return <Navigate to="/" replace />;
+    }
+
+    return username ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default PrivateRoute;
