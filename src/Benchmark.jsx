@@ -440,8 +440,8 @@ const Benchmark = () => {
                     {showEval_text && (
                         <div className='container-horizontal'>
                             <h2 className="prediction-container">User Evaluation</h2>
-                            <button className='butt2' onClick={() => handleUserEvaluationText("REAL")}>TRUE</button>
-                            <button className='butt2' onClick={() => handleUserEvaluationText("FAKE")}>FALSE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluationText("REAL")}>REAL</button>
+                            <button className='butt2' onClick={() => handleUserEvaluationText("FAKE")}>FAKE</button>
                         </div>
                     )}
                     <div className='container-vertical-2'>
