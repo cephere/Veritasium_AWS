@@ -8,6 +8,8 @@ const PrivateRoute = () => {
 
     if (location.pathname === "/Admin" && username !== "admin1" && username !== "admin2") {
         return <Navigate to="/" replace />;
+    } else if (location.pathname === "/Admin/" && username !== "admin1" && username !== "admin2") {
+        return <Navigate to="/" replace />;
     }
 
     return username ? <Outlet /> : <Navigate to="/" replace />;
