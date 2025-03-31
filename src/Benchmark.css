@@ -211,7 +211,7 @@ h2{
     width: 1em;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 900px) {
     .container-horizontal{
         width: 70%;
         height: 50%;
@@ -230,6 +230,17 @@ h2{
     }
     .box-text-header{
         font-size: 1em;
+    }
+
+    .butt{
+        margin-top: 0.5em;
+        font-family: "Montserrat";
+        height: 30%;
+        background-color: #1B98E0;
+        border-color: #f3f9ef;
+        border-style: solid;
+        border-radius: 20px;
+        color: white;
     }
     
 }

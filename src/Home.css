@@ -191,6 +191,7 @@ body {
 
 .developers {
   display: flex;
+  justify-content: center;
 }
 
 .developer1, .developer2 {
@@ -311,6 +312,10 @@ body {
   color: white;
 }
 
+.op{
+  display: block;
+}
+
 @media screen and (max-width: 720px) {
   .topnav h2 a{
       font-size: 0.5em;
@@ -323,9 +328,9 @@ body {
   .hero1 h1, .hero1 p {
     font-family: "Montserrat";
     font-weight: bold;
-    font-size: 1em;
+    font-size: 0.9em;
     text-align: center;
-    padding-bottom: 20px;
+    padding-bottom: 1em;
   }
   .hero2 h1 {
     font-size: 1em;
@@ -333,6 +338,62 @@ body {
   .hero3 h1 {
     font-size: 1em;
   }
-  
+
+  .hero5{
+    gap: 1em;
+    justify-content: unset;
+  }
+
+  .hero5 h1{
+    font-size: 1em;
+  }
+
+  .hero6 h1 {
+    font-family: "Montserrat";
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 1em;
+    padding-bottom: 1%;
+  }
+
+  .hero6 p {
+    font-family: "Montserrat";
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 1em;
+    padding-bottom: 20px;
+  }
+
+  .developer1{
+    width: 30%;
+    height: 90%;
+    font-size: 0.5em;
+  }
+
+  .developer2{
+    width: 30%;
+    height: 90%;
+    font-size: 0.5em;
+  }
+
+  .op{
+    display: none;
+  }
+
+  .hero1 button, .hero6 button {
+    font-family: 'Montserrat';
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    padding: 1% 2%;
+    background-color: #1B857F;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
 
 }

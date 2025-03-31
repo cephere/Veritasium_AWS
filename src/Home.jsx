@@ -47,7 +47,7 @@ const Home = () => {
       <section className="hero1" ref={hero1Ref}>
         <h1>Why Fake News Detection Matters</h1>
         <p>The detection of false news proves essential since deceptive information circulates quickly to alter public viewpoints and political choices and democratic operations...</p>
-        <button className='butt' onClick={handleBenchmarkClick}>Benchmark</button>
+        <button onClick={handleBenchmarkClick}>Benchmark</button>
       </section>
 
       <section className="hero2">
@@ -64,13 +64,13 @@ const Home = () => {
           <p><em>VERITASIUM</em> browses articles and extracts both text and image contents...</p>
         </div>
         <div className='div412'>
-          <img src='/search.png' alt="Search and Extract" />
+          <img className='op' src='/search.png' alt="Search and Extract" />
         </div>
       </section>
 
       <section className="hero42">
         <div className='div421'>
-          <img src='/benchmark.png' alt="Benchmarking" />
+          <img className='op' src='/benchmark.png' alt="Benchmarking" />
         </div>
         <div className='div422'>
           <h1>Benchmark</h1>
@@ -82,12 +82,12 @@ const Home = () => {
         <h1>Meet the developers</h1>
         <div className='developers'>
           <div className="developer1">
-            <img src="/aaron.jpg" alt="Aaron Alimbon" />
+            <img className='op' src="/aaron.jpg" alt="Aaron Alimbon" />
             <h2>Aaron Alimbon</h2>
             <p>Specialist in Web Development and User Experience.</p>
           </div>
           <div className="developer2">
-            <img src="/matthew.jpg" alt="Matthew Centeno" />
+            <img className='op' src="/matthew.jpg" alt="Matthew Centeno" />
             <h2>Matthew Centeno</h2>
             <p>Expert in Machine Learning and Data Analysis.</p>
           </div>
