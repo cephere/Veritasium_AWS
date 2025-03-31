@@ -29,16 +29,7 @@ const Admin = () => {
   ];
 
   useEffect(() => {
-    const fetchCounts = async () => {
-      try {
-        const response = await axios.get('https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_count',
-          { headers: { "Content-Type": "application/json" } }
-        )
-        setCountsData(response.data);
-      } catch (error) {
-        console.error('Error fetching counts:', error);
-      }
-    };
+
 
     const fetchUsers = async () => {
       try {
@@ -69,6 +60,17 @@ const Admin = () => {
     fetchUsers();
     fetchRecords();
   }, []);
+
+  const fetchCounts = async () => {
+    try {
+      const response = await axios.get('https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_count',
+        { headers: { "Content-Type": "application/json" } }
+      )
+      setCountsData(response.data);
+    } catch (error) {
+      console.error('Error fetching counts:', error);
+    }
+  };
 
   const handleLogout = () => {
     sessionStorage.removeItem('username');
@@ -104,9 +106,13 @@ const Admin = () => {
     return pages;
   };
 
-  const fetchRecords = async (search = '', filter = 'All') => {
+  const searchRecords = async (search = '', filter = 'All') => {
     try {
-      const response = await axios.post("https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_records",
+      const response = await axios.post("https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/search_record",
+        {
+          search : search,
+          filter : filter
+        },
         { headers: { "Content-Type": "application/json" } }
       );
       setRecordsData(response.data);
@@ -118,7 +124,7 @@ const Admin = () => {
   
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchRecords(searchTerm, filterOption);
+    searchRecords(searchTerm, filterOption);
   };
 
   const downloadCSV = () => {
@@ -150,23 +156,36 @@ const Admin = () => {
   };
 
   const handleUpdate = async (recordId) => {
+    if (!updatedEvaluation.trim()) return; // Prevent empty updates
+  
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/update_record",
-        { adminEvaluation: updatedEvaluation,
-          recordId : recordId
+        { 
+          adminEvaluation: updatedEvaluation,
+          recordId: recordId
         },
         { headers: { "Content-Type": "application/json" } }
       );
-      
-      // Re-fetch records after update 
+  
+      // Update local state to reflect the new evaluation
+      setRecordsData(prevRecords =>
+        prevRecords.map(record =>
+          record.news_id === recordId
+            ? { ...record, admin_evaluation: updatedEvaluation }
+            : record
+        )
+      );
+  
+      // Reset editing state
       setEditingRecordId(null);
       setUpdatedEvaluation('');
-      window.location.reload();
+      fetchCounts();
     } catch (error) {
       console.error('Error updating record:', error);
     }
   };
+  
 
   return (
     <div className="admin-page">

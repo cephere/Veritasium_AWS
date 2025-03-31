@@ -19,24 +19,26 @@ const Benchmark = () => {
     const [showEval_image, setEval_image] = useState(true); // Toggle for text prediction
     const [showEval_text, setEval_text] = useState(true); // Toggle for text prediction
 
-    const [article_image, setArticle_image] = useState("");
-    const [article_text, setArticle_text] = useState("");
-    const username = sessionStorage.getItem('username');
+    const [article_image, setArticle_image] = useState(""); // Stores user input used for prediction
+    const [article_text, setArticle_text] = useState(""); // Stores user input used for prediction
+    
+    const username = sessionStorage.getItem('username'); // Gets username of current user
 
-    const [user_id_f_image, setUser_id_f_image] = useState("");
-    const [news_type_f_image, setNews_type_f_image] = useState("");
-    const [news_link_f_image, setNews_link_f_image] = useState("");
-    const [news_prediction_f_image, setNews_prediction_f_image] = useState("");
+    const [user_id_f_image, setUser_id_f_image] = useState(""); // Stores userid for db
+    const [news_type_f_image, setNews_type_f_image] = useState(""); // Stores news type for db
+    const [news_link_f_image, setNews_link_f_image] = useState(""); // Store news link for db
+    const [news_prediction_f_image, setNews_prediction_f_image] = useState(""); // Stores final prediction for db
 
-    const [user_id_f_text, setUser_id_f_text] = useState("");
-    const [news_type_f_text, setNews_type_f_text] = useState("");
-    const [news_link_f_text, setNews_link_f_text] = useState("");
-    const [news_prediction_f_text, setNews_prediction_f_text] = useState("");
-    const [user_eval_image, setUser_eval_image] = useState("");
-    const [user_eval_text, setUser_eval_text] = useState("");
+    const [user_id_f_text, setUser_id_f_text] = useState(""); // Stores used id for db
+    const [news_type_f_text, setNews_type_f_text] = useState(""); // Stores news tyoe for db
+    const [news_link_f_text, setNews_link_f_text] = useState(""); // Stores news link for db
+    const [news_prediction_f_text, setNews_prediction_f_text] = useState(""); // Stores final prediction for db
 
-    const [isLoadingImage, setIsLoadingImage] = useState(false);
-    const [isLoadingText, setIsLoadingText] = useState(false);
+    const [user_eval_image, setUser_eval_image] = useState(""); // Stores user evaluation for db
+    const [user_eval_text, setUser_eval_text] = useState(""); // Stores user evaluation for db
+
+    const [isLoadingImage, setIsLoadingImage] = useState(false); // Loading screen for image
+    const [isLoadingText, setIsLoadingText] = useState(false); // Loading screen for text
 
     // Fetch API for image-based prediction
     const fetchapi_image = async () => {
@@ -178,7 +180,7 @@ const Benchmark = () => {
         } catch (error) {
             console.error("Error sending data to the database", error);
         }
-    }
+    };
 
     const sendDbText = async (x) => {
         try {
@@ -197,7 +199,7 @@ const Benchmark = () => {
         } catch (error) {
             console.error("Error sending data to the database", error);
         }
-    }
+    };
     
     const image_more = async (event) => {
         event.preventDefault();
@@ -222,7 +224,7 @@ const Benchmark = () => {
         } catch (error) {
             console.error("Error fetching text prediction data", error);
         }
-    }
+    };
 
     const text_more = async (event) => {
         event.preventDefault();
@@ -236,7 +238,7 @@ const Benchmark = () => {
         } catch (error) {
             console.error("Error fetching text prediction data", error);
         }
-    }
+    };
 
     const text_close = async (event) => {
         event.preventDefault();
@@ -246,7 +248,7 @@ const Benchmark = () => {
         } catch (error) {
             console.error("Error fetching text prediction data", error);
         }
-    }
+    };
 
     const handlePredict_image = async (event) => {
         event.preventDefault();
@@ -333,7 +335,7 @@ const Benchmark = () => {
                 </div>
                 <div className="nav-right">
                     <h3>Hello, {username}!</h3>
-                    <img className="icon" src="icon.png" alt="User Icon" />
+                    <img className="icon" src="/icon.png" alt="User Icon" />
                     <h3>|</h3>
                     <NavLink to="/" onClick={handleLogout}>Logout</NavLink>
                 </div>
