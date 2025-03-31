@@ -116,10 +116,22 @@ h2{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content:space-evenly;
+    justify-content:left;
+    gap: 5%;
     background-color: transparent;
     padding: 1em;
+    margin: 1em;
 }
+
+.container-vertical-2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:left;
+    gap: 2%;
+    background-color: transparent;
+}
+
 
 .container-horizontal{
     display: flex;
@@ -155,9 +167,7 @@ h2{
 
 
 .butt{
-    margin-top: 0.5em;
     font-family: "Montserrat";
-    height: 60px;
     background-color: #1B98E0;
     border-color: #f3f9ef;
     border-style: solid;
@@ -211,6 +221,14 @@ h2{
     width: 1em;
 }
 
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2em;
+}
+
 @media screen and (max-width: 900px) {
     .container-horizontal{
         width: 70%;
@@ -235,7 +253,6 @@ h2{
     .butt{
         margin-top: 0.5em;
         font-family: "Montserrat";
-        height: 30%;
         background-color: #1B98E0;
         border-color: #f3f9ef;
         border-style: solid;

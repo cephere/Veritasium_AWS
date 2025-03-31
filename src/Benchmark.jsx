@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from "axios";
 import "./Benchmark.css";
+import Loading from 'react-loading';
 
 const Benchmark = () => {
     const [img_model_results, set_img_model_results] = useState([]); // Model results for image-based prediction
@@ -10,8 +11,8 @@ const Benchmark = () => {
     const [showResults_image, setShowResults_image] = useState(false); // Toggle for image model results
     const [showPred_image, setShowPred_image] = useState(false); // Toggle for image prediction
 
-    const [textResults, setTextResults] = useState([]); // Model results for text-based prediction
-    const [text_pred, setText_pred] = useState([]); // Final prediction for text-based prediction
+    const [text_model_results, set_text_model_results] = useState([]); // Model results for text-based prediction
+    const [text_pred, set_text_pred] = useState([]); // Final prediction for text-based prediction
 
     const [showResults_text, setShowResults_text] = useState(false); // Toggle for text model results
     const [showPred_text, setShowPred_text] = useState(false); // Toggle for text prediction
@@ -22,11 +23,20 @@ const Benchmark = () => {
     const [article_text, setArticle_text] = useState("");
     const username = sessionStorage.getItem('username');
 
-    const [user_id_f, setUser_id_f] = useState("");
-    const [news_type_f, setNews_type_f] = useState("");
-    const [news_link_f, setNews_link_f] = useState("");
-    const [news_prediction_f, setNews_prediction_f] = useState("");
-    const [user_eval, setUser_eval] = useState("");
+    const [user_id_f_image, setUser_id_f_image] = useState("");
+    const [news_type_f_image, setNews_type_f_image] = useState("");
+    const [news_link_f_image, setNews_link_f_image] = useState("");
+    const [news_prediction_f_image, setNews_prediction_f_image] = useState("");
+
+    const [user_id_f_text, setUser_id_f_text] = useState("");
+    const [news_type_f_text, setNews_type_f_text] = useState("");
+    const [news_link_f_text, setNews_link_f_text] = useState("");
+    const [news_prediction_f_text, setNews_prediction_f_text] = useState("");
+    const [user_eval_image, setUser_eval_image] = useState("");
+    const [user_eval_text, setUser_eval_text] = useState("");
+
+    const [isLoadingImage, setIsLoadingImage] = useState(false);
+    const [isLoadingText, setIsLoadingText] = useState(false);
 
     // Fetch API for image-based prediction
     const fetchapi_image = async () => {
@@ -45,10 +55,10 @@ const Benchmark = () => {
             set_img_model_results(response.data.results || []);
             set_img_pred(response.data.final_pred);
 
-            setUser_id_f(response.data.used_id || username);
-            setNews_type_f(response.data.news_type || "N/A");
-            setNews_link_f(response.data.news_link || article_image);
-            setNews_prediction_f(response.data.final_pred || "N/A");
+            setUser_id_f_image(response.data.used_id || username);
+            setNews_type_f_image(response.data.news_type || "N/A");
+            setNews_link_f_image(response.data.news_link || article_image);
+            setNews_prediction_f_image(response.data.final_pred || "N/A");
             setShowPred_image(true);
     
         } catch (error) {
@@ -63,12 +73,21 @@ const Benchmark = () => {
         try {
             const response = await axios.post(
                 "https://k1jro7dagk.execute-api.ap-southeast-1.amazonaws.com/dev/load_model",
-                { input_text: article_text },
+                {   
+                    user_id: username, 
+                    news_link: article_text 
+                },
                 { headers: { "Content-Type": "application/json" } }
             );
-            setTextResults(response.data.results || []);
-            setText_pred(response.data.final_prediction);
+            set_text_model_results(response.data.results || []);
+            set_text_pred(response.data.final_prediction);
+
+            setUser_id_f_text(response.data.used_id || username);
+            setNews_type_f_text(response.data.news_type || "N/A");
+            setNews_link_f_text(response.data.news_link || article_image);
+            setNews_prediction_f_text(response.data.final_prediction || "N/A");
             setShowPred_text(true);
+
         } catch (error) {
             alert("Failed to fetch text prediction data. For details, check the console.");
             setShowPred_text(false);
@@ -109,15 +128,67 @@ const Benchmark = () => {
         }
     };
 
-    const sendDb = async (x) => {
+    const handleScrapeText = async () => {
+        if (!article_text || !article_text.startsWith("http")) {
+            alert("Please enter a valid URL!");
+            return null;
+        }
+    
+        try {
+            const response = await axios.post(
+                "https://6ui0ain2tf.execute-api.ap-southeast-1.amazonaws.com/api",
+                { 
+                    url: article_text,
+                    username: username 
+                },
+                { headers: { "Content-Type": "application/json" } }
+            );
+    
+            console.log("Response from Lambda:", response.data);
+    
+            if (response.data.status === "success" && response.data.article_text) {
+                set_text_model_results(response.data.article_text);
+                console.log("Stored image URL:", response.data.article_text);  
+                return response.data;
+            } else {
+                console.warn("Text scraping succeeded but no text URL found.");
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching text data", error);
+            alert("Failed to fetch text. Check the console for details.");
+            return null;
+        }
+    };
+
+    const sendDbImage = async (x) => {
         try {
             const response = await axios.post(
                 "https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/record",
                 { 
-                    user_id: Number(user_id_f),
-                    news_type: String(news_type_f), 
-                    news_link: String(news_link_f),
-                    news_prediction: String(news_prediction_f),
+                    user_id: Number(user_id_f_image),
+                    news_type: String(news_type_f_image), 
+                    news_link: String(news_link_f_image),
+                    news_prediction: String(news_prediction_f_image),
+                    user_evaluation: String(x)
+                },
+                { headers: { "Content-Type": "application/json" } }
+            );
+            console.log("Response from Lambda:", response.data);
+        } catch (error) {
+            console.error("Error sending data to the database", error);
+        }
+    }
+
+    const sendDbText = async (x) => {
+        try {
+            const response = await axios.post(
+                "https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/record-1",
+                { 
+                    user_id: Number(user_id_f_text),
+                    news_type: String(news_type_f_text), 
+                    news_link: String(news_link_f_text),
+                    news_prediction: String(news_prediction_f_text),
                     user_evaluation: String(x)
                 },
                 { headers: { "Content-Type": "application/json" } }
@@ -142,6 +213,17 @@ const Benchmark = () => {
         }
     };
 
+    const image_close = async (event) => {
+        event.preventDefault();
+        try {
+            setShowResults_image(false);
+            setShowPred_image(false);
+
+        } catch (error) {
+            console.error("Error fetching text prediction data", error);
+        }
+    }
+
     const text_more = async (event) => {
         event.preventDefault();
         try {
@@ -156,18 +238,28 @@ const Benchmark = () => {
         }
     }
 
-    // Handle Image Prediction
+    const text_close = async (event) => {
+        event.preventDefault();
+        try {
+                setShowResults_text(false);
+                setShowPred_text(false);
+        } catch (error) {
+            console.error("Error fetching text prediction data", error);
+        }
+    }
+
     const handlePredict_image = async (event) => {
         event.preventDefault();
+        setShowResults_image(false);
+        setShowPred_image(false);
+        setIsLoadingImage(true); 
         await handleScrapeImage();
-        alert("Please wait for a few seconds while we process your request...");
         try {
             const scrapeResult = await handleScrapeImage();
             console.log("Scrape Result:", scrapeResult);
     
             if (scrapeResult && scrapeResult.status === "success") {
                 await fetchapi_image(scrapeResult.image_url);  // Pass image URL to fetchapi_image
-                alert("Image prediction completed successfully! Closed the popup to see the results.");
                 setEval_image(true); 
             } else {
                 console.warn("Image scraping failed, fetchapi_image will not run.");
@@ -175,23 +267,29 @@ const Benchmark = () => {
         } catch (error) {
             console.error("Error in processing:", error);
         }
+        setIsLoadingImage(false);
     };
     
-    // Handle Text Prediction
     const handlePredict_text = async (event) => {
         event.preventDefault();
-        alert("Please wait for a few seconds while we process your request...");
+        setShowResults_text(false);
+        setShowPred_text(false);
+        setIsLoadingText(true);
         try {
-            if (!article_text) {
-                alert("Please enter a valid text!");
-                return;
+            const scrapeResult = await handleScrapeText();
+            console.log("Scrape Result:", scrapeResult);
+
+            if (scrapeResult && scrapeResult.status === "success"){
+                await fetchapi_text(scrapeResult.article_text); 
+                setEval_text(true); 
+            }else{
+                alert("Text scraping failed.", error)
+                console.warn("Text scraping failed, fetchapi_text will not run.");
             }
-            await fetchapi_text(); 
-            alert("Text prediction completed successfully!");
-            setEval_image(true); 
         } catch (error) {
-            console.error("Error in processing:", error);
+            alert("Error in processing:", error);
         }
+        setIsLoadingText(false)
     };
 
     const handleLogout = () => {
@@ -199,20 +297,33 @@ const Benchmark = () => {
         window.location.href = "/";
     };
 
-    const handleUserEvaluation = (evalValue) => {
-        setUser_eval(evalValue);
+    const handleUserEvaluationImage = (evalValue) => {
+        setUser_eval_image(evalValue);
         console.log({
-            "used_id" : user_id_f,
-            "news_type" : news_type_f,
-            "news_link" : news_link_f,
-            "news_prediction" : news_prediction_f,
+            "used_id" : user_id_f_image,
+            "news_type" : news_type_f_image,
+            "news_link" : news_link_f_image,
+            "news_prediction" : news_prediction_f_image,
             "user_evaluation" : evalValue
         });
-        sendDb(evalValue); 
+        sendDbImage(evalValue); 
         alert("Thank you for your evaluation!");
         setEval_image(false); 
     };
-    
+
+    const handleUserEvaluationText = (evalValue) => {
+        setUser_eval_text(evalValue);
+        console.log({
+            "used_id" : user_id_f_text,
+            "news_type" : news_type_f_text,
+            "news_link" : news_link_f_text,
+            "news_prediction" : news_prediction_f_text,
+            "user_evaluation" : evalValue
+        });
+        sendDbText(evalValue); 
+        alert("Thank you for your evaluation!");
+        setEval_text(false); 
+    };
     
     return (
         <div className="container">
@@ -260,9 +371,22 @@ const Benchmark = () => {
                         </button>
                     </div>
                 </form>
-            </div>       
 
-            {/* Image-Based Prediction Results */}
+            {isLoadingImage && (
+                <div className="loading-container">
+                    <Loading type="spin" color="#000" height={50} width={50} />
+                    <p>Processing Image-Based Prediction...</p>
+                </div>
+            )}
+
+            {isLoadingText && (
+                <div className="loading-container">
+                    <Loading type="spin" color="#000" height={50} width={50} />
+                    <p>Processing Text-Based Prediction...</p>
+                </div>
+            )}
+            </div>  
+
             {showPred_image && (
                 <div className="container-vertical">
                     <h2 className="container-text">Image-Based Prediction Results:</h2>
@@ -273,11 +397,14 @@ const Benchmark = () => {
                     {showEval_image && (
                         <div className='container-horizontal'>
                             <h2 className="prediction-container">User Evaluation</h2>
-                            <button className='butt2' onClick={() => handleUserEvaluation("REAL")}>REAL</button>
-                            <button className='butt2' onClick={() => handleUserEvaluation("FAKE")}>FAKE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluationImage("REAL")}>REAL</button>
+                            <button className='butt2' onClick={() => handleUserEvaluationImage("FAKE")}>FAKE</button>
                         </div>
                     )}
-                    <button className='butt' onClick={image_more}>More Info</button>
+                    <div className='container-vertical-2'>
+                        <button className='butt' onClick={image_more}>More Info</button>
+                        <button className='butt' onClick={image_close}>Close</button>
+                    </div>
                 </div>
             )}
 
@@ -313,12 +440,14 @@ const Benchmark = () => {
                     {showEval_text && (
                         <div className='container-horizontal'>
                             <h2 className="prediction-container">User Evaluation</h2>
-                            <button className='butt2' onClick={() => handleUserEvaluation("TRUE")}>TRUE</button>
-                            <button className='butt2' onClick={() => handleUserEvaluation("FALSE")}>FALSE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluationText("REAL")}>TRUE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluationText("FAKE")}>FALSE</button>
                         </div>
                     )}
-
-                    <button className='butt' onClick={text_more}>More Info</button>
+                    <div className='container-vertical-2'>
+                        <button className='butt' onClick={text_more}>More Info</button>
+                        <button className='butt' onClick={text_close}>Close</button>
+                    </div>
                 </div>
             )}
 
@@ -327,9 +456,9 @@ const Benchmark = () => {
             {showResults_text && (
                 <div className="container-vertical">
                     <h2 className="container-text">Text Models:</h2>
-                    {textResults.length > 0 ? (
+                    {text_model_results.length > 0 ? (
                         <>
-                            {textResults.map((text_algo, index) => (
+                            {text_model_results.map((text_algo, index) => (
                                 <div className="container-horizontal" key={`${text_algo.model_name || 'text'}-${index}`}>
                                     <h2 className="prediction-container">
                                         {text_algo.model}: {text_algo.prediction}
