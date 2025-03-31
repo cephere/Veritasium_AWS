@@ -110,92 +110,94 @@ const Login = () => {
     };
 
     return (
-        <div className='login-container'>
-            <div className='padding'>
-                <button className="back-button" onClick={() => nav('/')}>
-                    <FaArrowLeft /> <p className='Home'>Back to Home</p>
-                </button>
+        <div className='bg'>
+            <div className='login-container'>
+                <div className='padding'>
+                    <button className="back-button" onClick={() => nav('/')}>
+                        <FaArrowLeft /> <p className='Home'>Back to Home</p>
+                    </button>
 
-                <div className='login-toggle'>
-                    <button 
-                        className={`toggle-button ${activeButton === 'login' ? 'active' : ''}`} 
-                        onClick={() => handleButtonClick('login')}
-                        autoFocus
-                    >
-                        <h2>Login</h2>
-                    </button>
-                    <button 
-                        className={`toggle-button ${activeButton === 'admin' ? 'active' : ''}`} 
-                        onClick={() => handleButtonClick('admin')}
-                    >
-                        <h2>Admin Login</h2>
-                    </button>
-                    <button 
-                        className={`toggle-button ${activeButton === 'register' ? 'active' : ''}`} 
-                        onClick={() => handleButtonClick('register')}
-                    >
-                        <h2>Register</h2>
-                    </button>
-                </div>
-
-                {activeButton === 'register' ? (
-                    <form onSubmit={handleRegister} className="register-form">
-                        <input className='input' type="email" placeholder="Input email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <input className='input' type="text" placeholder="Input username" value={username} onChange={handleUsernameChange} required />
-                        <div className='password-container'>
-                            <input
-                                className='password' type={isPasswordVisible ? 'text' : 'password'}
-                                placeholder="Input password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button type="button" onClick={togglePasswordVisibility} className='eye-button'>
-                                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                        </div>
-                        <button className='butt' type='submit'>Register</button>
-                        {message && <p className='error'>{message}</p>}
-                    </form>
-                ) : (
-                    <form onSubmit={handleLogin}>
-                        
-                        <input
-                            className='input'
-                            type="text"
-                            placeholder="Input username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                        <div className='password-container'>
-                            <input
-                                className='password' type={isPasswordVisible ? 'text' : 'password'}
-                                placeholder="Input password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button type="button" onClick={togglePasswordVisibility} className='eye-button'>
-                                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                        </div>
-                        <NavLink className="ResetPassword" to="/ResetPassword">Forgot Password?</NavLink>
-                        <br/>
-                        <button className='butt' type='submit'>Login</button>
-                        {message && <p className='error'>{message}</p>}
-                    </form>
-                )}
-                {showPopup && (
-                    <div className="popup">
-                        <div className="popup-content">
-                            <span className="close" onClick={closePopup}>&times;</span>
-                            <h2>Account Creation Successful!</h2>
-                            <p className='description'>You can now proceed to login.</p>
-                            <NavLink to="/Login" className="navlink-button" onClick={closePopup}>Go to Login</NavLink>
-                        </div>
+                    <div className='login-toggle'>
+                        <button 
+                            className={`toggle-button ${activeButton === 'login' ? 'active' : ''}`} 
+                            onClick={() => handleButtonClick('login')}
+                            autoFocus
+                        >
+                            <h2>Login</h2>
+                        </button>
+                        <button 
+                            className={`toggle-button ${activeButton === 'admin' ? 'active' : ''}`} 
+                            onClick={() => handleButtonClick('admin')}
+                        >
+                            <h2>Admin Login</h2>
+                        </button>
+                        <button 
+                            className={`toggle-button ${activeButton === 'register' ? 'active' : ''}`} 
+                            onClick={() => handleButtonClick('register')}
+                        >
+                            <h2>Register</h2>
+                        </button>
                     </div>
-                )}
+
+                    {activeButton === 'register' ? (
+                        <form onSubmit={handleRegister} className="register-form">
+                            <input className='input' type="email" placeholder="Input email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                            <input className='input' type="text" placeholder="Input username" value={username} onChange={handleUsernameChange} required />
+                            <div className='password-container'>
+                                <input
+                                    className='password' type={isPasswordVisible ? 'text' : 'password'}
+                                    placeholder="Input password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <button type="button" onClick={togglePasswordVisibility} className='eye-button'>
+                                    {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
+                            <button className='butt' type='submit'>Register</button>
+                            {message && <p className='error'>{message}</p>}
+                        </form>
+                    ) : (
+                        <form onSubmit={handleLogin}>
+                            
+                            <input
+                                className='input'
+                                type="text"
+                                placeholder="Input username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                            <div className='password-container'>
+                                <input
+                                    className='password' type={isPasswordVisible ? 'text' : 'password'}
+                                    placeholder="Input password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <button type="button" onClick={togglePasswordVisibility} className='eye-button'>
+                                    {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
+                            <NavLink className="ResetPassword" to="/ResetPassword">Forgot Password?</NavLink>
+                            <br/>
+                            <button className='butt' type='submit'>Login</button>
+                            {message && <p className='error'>{message}</p>}
+                        </form>
+                    )}
+                    {showPopup && (
+                        <div className="popup">
+                            <div className="popup-content">
+                                <span className="close" onClick={closePopup}>&times;</span>
+                                <h2>Account Creation Successful!</h2>
+                                <p className='description'>You can now proceed to login.</p>
+                                <NavLink to="/Login" className="navlink-button" onClick={closePopup}>Go to Login</NavLink>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

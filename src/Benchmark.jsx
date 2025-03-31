@@ -15,7 +15,8 @@ const Benchmark = () => {
 
     const [showResults_text, setShowResults_text] = useState(false); // Toggle for text model results
     const [showPred_text, setShowPred_text] = useState(false); // Toggle for text prediction
-    const [showEval, setEval] = useState(true); // Toggle for text prediction
+    const [showEval_image, setEval_image] = useState(true); // Toggle for text prediction
+    const [showEval_text, setEval_text] = useState(true); // Toggle for text prediction
 
     const [article_image, setArticle_image] = useState("");
     const [article_text, setArticle_text] = useState("");
@@ -167,7 +168,7 @@ const Benchmark = () => {
             if (scrapeResult && scrapeResult.status === "success") {
                 await fetchapi_image(scrapeResult.image_url);  // Pass image URL to fetchapi_image
                 alert("Image prediction completed successfully! Closed the popup to see the results.");
-                setEval(true); 
+                setEval_image(true); 
             } else {
                 console.warn("Image scraping failed, fetchapi_image will not run.");
             }
@@ -187,7 +188,7 @@ const Benchmark = () => {
             }
             await fetchapi_text(); 
             alert("Text prediction completed successfully!");
-            setEval(true); 
+            setEval_image(true); 
         } catch (error) {
             console.error("Error in processing:", error);
         }
@@ -209,7 +210,7 @@ const Benchmark = () => {
         });
         sendDb(evalValue); 
         alert("Thank you for your evaluation!");
-        setEval(false); 
+        setEval_image(false); 
     };
     
     
@@ -269,11 +270,11 @@ const Benchmark = () => {
                         <h2 className="prediction-container">Final Prediction: {img_pred || "N/A"}</h2>
                     </div>
 
-                    {showEval && (
+                    {showEval_image && (
                         <div className='container-horizontal'>
                             <h2 className="prediction-container">User Evaluation</h2>
-                            <button className='butt' onClick={() => handleUserEvaluation("REAL")}>REAL</button>
-                            <button className='butt' onClick={() => handleUserEvaluation("FAKE")}>FAKE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluation("REAL")}>REAL</button>
+                            <button className='butt2' onClick={() => handleUserEvaluation("FAKE")}>FAKE</button>
                         </div>
                     )}
                     <button className='butt' onClick={image_more}>More Info</button>
@@ -309,11 +310,11 @@ const Benchmark = () => {
                         <h2 className="prediction-container">Final Prediction: {text_pred || "N/A"}</h2>
                     </div>
 
-                    {showEval && (
+                    {showEval_text && (
                         <div className='container-horizontal'>
                             <h2 className="prediction-container">User Evaluation</h2>
-                            <button className='butt' onClick={() => handleUserEvaluation("TRUE")}>TRUE</button>
-                            <button className='butt' onClick={() => handleUserEvaluation("FALSE")}>FALSE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluation("TRUE")}>TRUE</button>
+                            <button className='butt2' onClick={() => handleUserEvaluation("FALSE")}>FALSE</button>
                         </div>
                     )}
 

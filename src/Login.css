@@ -1,3 +1,7 @@
+.bg{
+    background-color: #13293D;
+}
+
 .login-toggle button {
     background-color: #E8F1F2;
     border: none;
@@ -65,6 +69,7 @@
 }
 
 .input{
+    font-family: 'Montserrat';
     width: 250px;
     height: 35px;
     margin: 10px;
@@ -78,6 +83,7 @@
 }
 
 .password {
+    font-family: 'Montserrat';
     width: 250px;
     height: 35px;
     margin: 10px;

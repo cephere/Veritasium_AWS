@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import axios from "axios";
 import './Admin.css';
+import './navbar.css';
+
 
 const Admin = () => {
   const [username, setUsername] = useState(sessionStorage.getItem('username'));
@@ -27,10 +31,10 @@ const Admin = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/counts');
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setCountsData(data);
+        const response = await axios.get('https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_count',
+          { headers: { "Content-Type": "application/json" } }
+        )
+        setCountsData(response.data);
       } catch (error) {
         console.error('Error fetching counts:', error);
       }
@@ -38,10 +42,10 @@ const Admin = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/users');
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setUsersData(data);
+        const response = await axios.get("https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_users",
+          { headers: { "Content-Type": "application/json" } }
+        );
+        setUsersData(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -49,10 +53,13 @@ const Admin = () => {
 
     const fetchRecords = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/records');
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setRecordsData(data);
+        const response = await axios.get("https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_records",
+          { headers: { "Content-Type": "application/json" } }
+        );
+  
+  
+        setRecordsData(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching records:', error);
       }
@@ -99,10 +106,11 @@ const Admin = () => {
 
   const fetchRecords = async (search = '', filter = 'All') => {
     try {
-      const response = await fetch(`http://localhost:8080/api/search?search=${search}&filter=${filter}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      setRecordsData(data);
+      const response = await axios.post("https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/get_records",
+        { headers: { "Content-Type": "application/json" } }
+      );
+      setRecordsData(response.data);
+      console.log(response.data)
     } catch (error) {
       console.error('Error fetching records:', error);
     }
@@ -120,14 +128,14 @@ const Admin = () => {
 
     recordsData.forEach(record => {
       const row = [
-        record.newsId,
-        record.userId,
-        record.newsType,
-        record.newsLink,
-        record.newsPrediction,
-        record.userEvaluation,
-        record.adminEvaluation,
-        record.dateOfSubmission
+        record.news_id,
+        record.user_id,
+        record.news_type,
+        record.news_link,
+        record.news_prediction,
+        record.user_evaluation,
+        record.admin_evaluation,
+        record.submission_date
       ];
       csvRows.push(row.join(','));
     });
@@ -143,38 +151,37 @@ const Admin = () => {
 
   const handleUpdate = async (recordId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/records/${recordId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        "https://bhelhdyj88.execute-api.ap-southeast-1.amazonaws.com/api/update_record",
+        { adminEvaluation: updatedEvaluation,
+          recordId : recordId
         },
-        body: JSON.stringify({ adminEvaluation: updatedEvaluation }),
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
+        { headers: { "Content-Type": "application/json" } }
+      );
       
-      // Re-fetch records after update
-      await fetchRecords();
-      
+      // Re-fetch records after update 
       setEditingRecordId(null);
       setUpdatedEvaluation('');
+      window.location.reload();
     } catch (error) {
       console.error('Error updating record:', error);
-      alert('Failed to update the record. Please try again.');
     }
   };
 
   return (
     <div className="admin-page">
-      <nav className="navbar">
-        <div className="logo" onClick={() => window.location.href = '/'}>VERITASIUM</div>
-        <div className="nav-buttons">
-          <a onClick={() => window.location.href = '/Admin'}>Refresh</a>
-          <div className='adminuser'>
-            <a>Admin: {username}</a>
+      <div className="topnav">
+          <div className="nav-left">
+              <NavLink to="/"><h2>VERITASIUM: FAKE NEWS DETECTION</h2></NavLink>
           </div>
-          <a onClick={handleLogout}>Logout</a>
-        </div>
-      </nav>
+          <div className="nav-right">
+            <a onClick={() => window.location.href = '/Admin'}>Refresh</a>
+              <h3>Hello, {username}!</h3>
+              <img className="icon" src="icon.png" alt="User Icon" />
+              <h3>|</h3>
+              <NavLink to="/" onClick={handleLogout}>Logout</NavLink>
+          </div>
+      </div>
       <h1>Admin Dashboard</h1>
 
       <div className="topcontainer">
@@ -218,7 +225,7 @@ const Admin = () => {
             <tbody>
               {currentUsers.map((user, index) => (
                 <tr key={index}>
-                  <td>{user.userID}</td>
+                  <td>{user.user_id}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                 </tr>
@@ -263,31 +270,31 @@ const Admin = () => {
             {currentRecords.length > 0 ? (
               currentRecords.map((record, index) => (
                 <tr key={index}>
-                  <td>{record.newsId}</td>
-                  <td>{record.userId}</td>
-                  <td>{record.newsType}</td>
-                  <td className='news-link'><a href={record.newsLink} target="_blank" rel="noopener noreferrer">{record.newsLink}</a></td>
-                  <td>{record.newsPrediction}</td>
-                  <td>{record.userEvaluation}</td>
+                  <td>{record.news_id}</td>
+                  <td>{record.user_id}</td>
+                  <td>{record.news_type}</td>
+                  <td className='news-link'><a href={record.news_link} target="_blank" rel="noopener noreferrer">{record.news_link}</a></td>
+                  <td>{record.news_prediction}</td>
+                  <td>{record.user_evaluation}</td>
                   <td>
-                    {editingRecordId === record.newsId ? (
+                    {editingRecordId === record.news_id ? (
                       <input
                         type="text"
                         className="admin-evaluation-input"
-                        value={updatedEvaluation}
+                        value={updatedEvaluation || ''}
                         onChange={(e) => setUpdatedEvaluation(e.target.value)}
                       />
                     ) : (
-                      record.adminEvaluation
+                      record.admin_evaluation
                     )}
                   </td>
-                  <td>{new Date(record.dateOfSubmission).toLocaleDateString('en-CA')}</td>
+                  <td>{record.submission_date}</td>
                   <td>
-                    {editingRecordId === record.newsId ? (
-                      <button className='update' onClick={() => handleUpdate(record.newsId)}>Save</button>
+                    {editingRecordId === record.news_id ? (
+                      <button className='update' onClick={() => handleUpdate(record.news_id)}>Save</button>
                     ) : (
                       <button className='update' onClick={() => {
-                        setEditingRecordId(record.newsId);
+                        setEditingRecordId(record.news_id);
                         setUpdatedEvaluation(record.adminEvaluation);
                       }}>Update</button>
                     )}
