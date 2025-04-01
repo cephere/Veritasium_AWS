@@ -90,7 +90,6 @@ form {
 
 .input{
     font-family: 'Montserrat';
-    width: 50%;
     height: 50%;
     margin-top: 2%;
     margin-bottom: 2%;
@@ -102,7 +101,6 @@ form {
 .password-container {
     align-self: center;
     position: relative;
-    width: 50%;
     margin-top: 2%;
     margin-bottom: 2%;
 }
@@ -125,6 +123,7 @@ form {
     border: none;
     cursor: pointer;
     color: #13293D;
+    padding: 5%;
 }
     .eye-button:focus {
         outline: none;
