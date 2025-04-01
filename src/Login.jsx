@@ -181,7 +181,6 @@ const Login = () => {
                                     {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
-                            <NavLink className="ResetPassword" to="/ResetPassword">Forgot Password?</NavLink>
                             <button className='butt' type='submit'>Login</button>
                             {message && <p className='error'>{message}</p>}
                         </form>
