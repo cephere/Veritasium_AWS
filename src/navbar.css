@@ -108,7 +108,7 @@
         display: flex;
         align-items: center;
         justify-content: end;
-        margin: 0 1em;
+        margin: 0 1%;
         width: 100%; /* Ensure it takes the full width */
     }
 

@@ -32,17 +32,17 @@ const Home = () => {
 
   return (
     <div className="App">
-        <div className="topnav">
-            <div className="nav-left">
-                <NavLink to="/"><h2>VERITASIUM: FAKE NEWS DETECTION</h2></NavLink>
-            </div>
-            <div className="nav-right">
-              <a onClick={scrollToHero1}>Home</a>
-              <a onClick={scrollToHero4}>How It Works</a>
-              <a onClick={scrollToHero5}>Developers</a>
-              <a onClick={scrollToHero6}>Benchmark</a>
-            </div>
-        </div>
+      <div className="topnav">
+          <div className="nav-left">
+              <NavLink to="/"><h2>VERITASIUM: FAKE NEWS DETECTION</h2></NavLink>
+          </div>
+          <div className="nav-right">
+            <a onClick={scrollToHero1}>Home</a>
+            <a onClick={scrollToHero4}>How It Works</a>
+            <a onClick={scrollToHero5}>Developers</a>
+            <a onClick={scrollToHero6}>Benchmark</a>
+          </div>
+      </div>
 
       <section className="hero1" ref={hero1Ref}>
         <h1>Why Fake News Detection Matters</h1>
@@ -52,30 +52,19 @@ const Home = () => {
 
       <section className="hero2">
         <h1>An alarming rise of <em className='orange'>fake news</em> is steadily undermining public trust...</h1>
+        <h2><em className='blue'>VERITASIUM</em> addresses this by considering both texts and images...</h2>
       </section>
 
-      <section className="hero3">
-        <h1><em className='blue'>VERITASIUM</em> addresses this by considering both texts and images...</h1>
+      <section className="hero2">
+        <img className='op' src='/search.png' alt="Search and Extract" />
+        <h3>Search and Extract</h3>
+        <p><em>VERITASIUM</em> browses articles and extracts both text and image contents...</p>
       </section>
 
-      <section className="hero41" ref={hero41Ref}>
-        <div className='div411'>
-          <h1>Search and Extract</h1>
-          <p><em>VERITASIUM</em> browses articles and extracts both text and image contents...</p>
-        </div>
-        <div className='div412'>
-          <img className='op' src='/search.png' alt="Search and Extract" />
-        </div>
-      </section>
-
-      <section className="hero42">
-        <div className='div421'>
-          <img className='op' src='/benchmark.png' alt="Benchmarking" />
-        </div>
-        <div className='div422'>
-          <h1>Benchmark</h1>
-          <p>A customized machine learning model is developed and fine-tuned through numerous training and testing...</p>
-        </div>
+      <section className="hero2">
+        <img className='op' src='/benchmark.png' alt="Benchmarking" />
+        <h3>Benchmark</h3>
+        <p>A customized machine learning model is developed and fine-tuned through numerous training and testing...</p>
       </section>
 
       <section className="hero5" ref={hero5Ref}>
@@ -86,7 +75,7 @@ const Home = () => {
             <h2>Aaron Alimbon</h2>
             <p>Specialist in Web Development and User Experience.</p>
           </div>
-          <div className="developer2">
+          <div className="developer1">
             <img className='op' src="/matthew.jpg" alt="Matthew Centeno" />
             <h2>Matthew Centeno</h2>
             <p>Expert in Machine Learning and Data Analysis.</p>

@@ -182,7 +182,6 @@ const Login = () => {
                                 </button>
                             </div>
                             <NavLink className="ResetPassword" to="/ResetPassword">Forgot Password?</NavLink>
-                            <br/>
                             <button className='butt' type='submit'>Login</button>
                             {message && <p className='error'>{message}</p>}
                         </form>

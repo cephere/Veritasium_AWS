@@ -1,3 +1,15 @@
+.Home{
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 .bg{
     background-color: #13293D;
 }
@@ -18,10 +30,10 @@
 .padding{
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     background-color: #E8F1F2;
     width: 50%;
     border-radius: 15px;
-    align-items: center;
 }
 
 .back-button {
@@ -30,35 +42,28 @@
     background: none;
     border: none;
     color: #13293D;
-    scale: 90%;
     cursor: pointer;
-    margin: 0 350px 25px 0;
 }
-
-.back-button:hover {
-    color: blue;
-}
-
-.Home {
-    margin: 0 0 0 10px;
-}
+    .back-button:hover {
+        color: blue;
+    }
 
 .login-toggle {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
-
-.toggle-button:hover {
-    background-color: rgba(211, 211, 211, 0.5);
-}
-
-.toggle-button:active,
-.toggle-button:focus, .back-button:focus {
-    outline: none;
-}
-
-.toggle-button.active {
-    border-top: 4px solid blue;
-}
+    .toggle-button:hover {
+        background-color: rgba(211, 211, 211, 0.5);
+    }
+    .toggle-button:active,
+    .toggle-button:focus, .back-button:focus {
+        outline: none;
+    }
+    .toggle-button.active {
+        border-top: 4px solid blue;
+    }
 
 .register-form {
     display: flex;
@@ -68,31 +73,35 @@
 
 .input{
     font-family: 'Montserrat';
-    width: 250px;
-    height: 35px;
-    margin: 10px;
-    padding-left: 10px;
+    font-size: 2em;
+    width: 70%;
+    height: 50%;
+    margin: 1%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    padding-left: 2%;
     border-radius: 8px;
-    padding-right: 20px;
 }
 
 .password-container {
+    align-self: center;
     position: relative;
+    width: 70%;
 }
 
 .password {
     font-family: 'Montserrat';
-    width: 250px;
-    height: 35px;
-    margin: 10px;
-    padding-left: 10px;
+    font-size: 2em;
+    width: 100%;
+    height: 15%;
+    margin: 1%;
+    padding-left: 2%;
     border-radius: 8px;
-    padding-right: 70px;
 }
 
 .eye-button {
     position: absolute;
-    right: 10px;
+    right: 1px;
     top: 55%;
     transform: translateY(-50%);
     background: none;
@@ -100,15 +109,14 @@
     cursor: pointer;
     color: #13293D;
 }
-
-.eye-button:focus {
-    outline: none;
-}
+    .eye-button:focus {
+        outline: none;
+    }
 
 .ResetPassword {
-    color:#13293D;
-    margin-left: 130px;
-    font-size: 14px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    font-size: 1.2m;
 }
 
 .error {
@@ -117,51 +125,66 @@
     margin-top: 20px;
 }
 
+
 @media screen and (max-width: 900px) {
+    .Home{
+        margin: 0;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
     .back-button {
         display: flex;
+        width: 100%;
         align-items: center;
         background: none;
         border: none;
         color: #13293D;
-        scale: 90%;
         cursor: pointer;
-        margin: 0 350px 25px 0;
+        padding: 0;
+        padding-top: 5%;
+        padding-bottom: 5%;
     }
-
+    
     button{
         font-size: 0.5em;
     }
 
     .input{
         font-family: 'Montserrat';
-        font-size: 0.5em;
-        width: 50%;
-        height: 15%;
+        font-size: 1em;
+        width: 70%;
+        height: 50%;
         margin: 1%;
-        padding-left: 10px;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        padding-left: 2%;
         border-radius: 8px;
-        padding-right: 20px;
     }
-
-    .password {
-        font-family: 'Montserrat';
-        font-size: 0.5em;
-        width: 50%;
-        height: 15%;
-        margin: 1%;
-        padding-left: 10px;
-        border-radius: 8px;
-        padding-right: 70px;
-    }
-
+    
     .password-container {
+        align-self: center;
         position: relative;
+        width: 70%;
     }
-
-    .ResetPassword {
-        color: #13293D;
-        margin-left: 130px;
-        font-size: 0.5em;
-    }  
+        .password {
+            font-family: 'Montserrat';
+            font-size: 1em;
+            width: 100%;
+            height: 15%;
+            margin: 1%;
+            padding-left: 2%;
+            border-radius: 8px;
+        }
+        .ResetPassword {
+            color: #13293D;
+            margin-top: 3%;
+            font-size: 0.5em;
+        }  
   }
