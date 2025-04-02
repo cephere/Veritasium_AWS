@@ -93,6 +93,7 @@
   
   .navlink-button:hover {
     background-color: #334B49;
+    color: white;
   }
 
   @media (max-width: 1024px) {

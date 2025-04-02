@@ -42,9 +42,15 @@ form {
     color: #13293D;
     cursor: pointer;
     padding-left: 2%;
+    width: 100%;
 }
     .back-button:hover {
         color: blue;
+    }
+    .back-button p {
+        font-family: 'Montserrat';
+        font-size: 90%;
+        padding-left: 2%;
     }
 
 .login-toggle {
