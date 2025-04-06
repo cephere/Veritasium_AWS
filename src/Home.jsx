@@ -64,7 +64,7 @@ const Home = () => {
       <section className="hero2">
         <img className='op' src='/benchmark.png' alt="Benchmarking" />
         <h3>Benchmark</h3>
-        <p>A customized machine learning model is developed and fine-tuned through numerous training and testing...</p>
+        <p>A customized machine learning model is developed and fine-tuned through numerous training and testing to determine whether news articles are real or fake...</p>
       </section>
 
       <section className="hero5" ref={hero5Ref}>

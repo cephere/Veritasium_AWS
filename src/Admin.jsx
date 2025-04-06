@@ -22,10 +22,10 @@ const Admin = () => {
   const recordsPerPage = 10;
 
   const summaryData = [
-    { modelPrediction: 'Fake', userEvaluation: 'No', adminEvaluation: 'False', countKey: 'FalseNegative' },
-    { modelPrediction: 'Fake', userEvaluation: 'Yes', adminEvaluation: 'True', countKey: 'TrueNegative' },
-    { modelPrediction: 'Real', userEvaluation: 'No', adminEvaluation: 'False', countKey: 'FalsePositive' },
-    { modelPrediction: 'Real', userEvaluation: 'Yes', adminEvaluation: 'True', countKey: 'TruePositive' }
+    { modelPrediction: 'Fake', adminEvaluation: 'Fake', countKey: 'FalseNegative' },
+    { modelPrediction: 'Fake', adminEvaluation: 'Real', countKey: 'TrueNegative' },
+    { modelPrediction: 'Real', adminEvaluation: 'Fake', countKey: 'FalsePositive' },
+    { modelPrediction: 'Real', adminEvaluation: 'Real', countKey: 'TruePositive' }
   ];
 
   useEffect(() => {
@@ -211,7 +211,6 @@ const Admin = () => {
             <thead>
               <tr>
                 <th>Model Prediction</th>
-                <th>User Evaluation</th>
                 <th>Admin Evaluation</th>
                 <th>Count</th>
               </tr>
@@ -222,7 +221,6 @@ const Admin = () => {
                 return (
                   <tr key={index}>
                     <td>{item.modelPrediction}</td>
-                    <td>{item.userEvaluation}</td>
                     <td>{item.adminEvaluation}</td>
                     <td>{count}</td>
                   </tr>
