@@ -265,7 +265,7 @@ const Admin = () => {
               <option className='options' value='User ID'>User  ID</option>
               <option className='options' value='NewsType'>News Type</option>
             </select>
-            <input className='inputsearch' type='text' placeholder='Search for name, User ID,...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <input className='inputsearch' type='text' placeholder='Input search term here...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
             <button className='recordsbutton'>Search</button>
             <button className='downloadcsv' onClick={downloadCSV}>Download CSV</button>
           </form>
