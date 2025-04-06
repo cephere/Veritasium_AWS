@@ -174,7 +174,6 @@ a {
 
 .news-link a {
   display: inline-block;
-  text-align: center;
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
