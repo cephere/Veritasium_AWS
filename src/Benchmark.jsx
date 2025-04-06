@@ -343,13 +343,13 @@ const Benchmark = () => {
             
             <div className="box">
                 <form onSubmit={handlePredict_image}>    
-                    <h2 className="box-text-header">Input News Article (Image-Based)</h2>
+                    <h2 className="box-text-header">Fake News Prediction (Image-Content)</h2>
                     <input
                         type="text"
                         className="text-box"
                         value={article_image}
                         onChange={(e) => setArticle_image(e.target.value)}
-                        placeholder="Enter your news article here..."
+                        placeholder="Enter your news link (url) here..."
                     />
                     <div style={{ padding: "15px" }}>
                         <button className="butt" style={{ fontSize: '20px' }} type="submit">
@@ -359,13 +359,13 @@ const Benchmark = () => {
                 </form>
 
                 <form onSubmit={handlePredict_text}>    
-                    <h2 className="box-text-header">Input News Article (Text-Based)</h2>
+                    <h2 className="box-text-header">Fake News Prediction (Text-Content)</h2>
                     <input
                         type="text"
                         className="text-box"
                         value={article_text}
                         onChange={(e) => setArticle_text(e.target.value)}
-                        placeholder="Enter your news article here..."
+                        placeholder="Enter your news link (url) here..."
                     />
                     <div style={{ padding: "15px" }}>
                         <button className="butt" style={{ fontSize: '20px' }} type="submit">
