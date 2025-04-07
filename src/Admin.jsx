@@ -93,19 +93,40 @@ const Admin = () => {
 
   const renderPagination = (currentPage, totalPages, setCurrentPage) => {
     const pages = [];
+    
     for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-        pages.push(
-          <button key={i} onClick={() => setCurrentPage(i)} className={currentPage === i ? 'active' : ''}>
-            {i}
-          </button>
-        );
-      } else if (pages[pages.length - 1] !== '...') {
-        pages.push(<span className='ellipsis' key={`dot-${i}`}>...</span>);
-      }
+        // Always show the first page
+        if (i === 1) {
+            pages.push(
+                <button key={i} onClick={() => setCurrentPage(i)} className={currentPage === i ? 'active' : ''}>
+                    {i}
+                </button>
+            );
+        } 
+        // Show the last page
+        else if (i === totalPages) {
+            pages.push(
+                <button key={i} onClick={() => setCurrentPage(i)} className={currentPage === i ? 'active' : ''}>
+                    {i}
+                </button>
+            );
+        } 
+        // Show the current page and its neighbors
+        else if (i >= currentPage - 1 && i <= currentPage + 1) {
+            pages.push(
+                <button key={i} onClick={() => setCurrentPage(i)} className={currentPage === i ? 'active' : ''}>
+                    {i}
+                </button>
+            );
+        } 
+        // Add ellipsis if needed
+        else if (pages[pages.length - 1] !== '...' && (i === currentPage - 2 || i === currentPage + 2)) {
+            pages.push(<span className='ellipsis' key={`dot-${i}`}>...</span>);
+        }
     }
+    
     return pages;
-  };
+};
 
   const searchRecords = async (search = '', filter = 'All') => {
     try {
